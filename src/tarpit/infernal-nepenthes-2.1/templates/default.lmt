@@ -1,0 +1,41 @@
+---
+markov:
+ - name: title
+   min: 5
+   max: 10
+ - name: header
+   min: 5
+   max: 10
+ - name: content
+   min: 25
+   max: 200
+link_array:
+   min_count: 5
+   max_count: 8
+   depth_min: 1
+   depth_max: 5
+links:
+ - name: footer_link
+   depth_min: 1
+   depth_max: 5
+...
+<!DOCTYPE html>
+<html>
+<head>
+	{{#title}}<title>{{title}}</title>{{/title}}
+</head>
+<body>
+<h3>{{ header }}</h3>
+{{# content }}
+<p>
+	{{ content }}
+</p>
+{{/ content }}
+<ul>
+{{# links }}
+	<li><a href="{{{ link }}}">{{ description }}</a></li>
+{{/ links }}
+</ul>
+<a href="{{{ footer_link.link }}}">{{ footer_link.description }}</a>
+</body>
+</html>

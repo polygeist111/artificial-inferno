@@ -1,0 +1,11 @@
+rock_manifest = {
+   ["api7-lua-tinyyaml-0.4.4-0.rockspec"] = "2ffcb18be6e749bdf6bf83593c423223",
+   doc = {
+      LICENSE = "62e6c428112be886619c3e5d0609121e",
+      ["MAINTAINING.md"] = "3e64569d2f3f05baf44b9f0c996c2f53",
+      ["README.md"] = "de00a3fc78a2ac139f2241f30ec0ad88"
+   },
+   lua = {
+      ["tinyyaml.lua"] = "d5cf942f7a086e086c1f5c665b29c3e3"
+   }
+}

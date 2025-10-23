@@ -1,0 +1,26 @@
+#
+# Simple config for testing.
+#
+---
+http_host: '::'
+http_port: 8893
+templates: 
+  - './templates'
+log_level: debug
+seed_file: './seed.txt'
+
+
+silos:
+  - name: default
+    wordlist: '/usr/share/dict/words'
+    corpus: './mishmash.txt'
+    min_wait: 10
+    max_wait: 65
+    prefixes:
+      - /maze
+      - /otherplace
+
+  - name: zerotest
+    wordlist: '/usr/share/dict/words'
+    corpus: './mishmash.txt'
+    zero_delay: true

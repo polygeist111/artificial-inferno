@@ -1,0 +1,603 @@
+commands = {}
+dependencies = {
+   ["api7-lua-tinyyaml"] = {
+      ["0.4.4-0"] = {}
+   },
+   basexx = {
+      ["0.4.1-1"] = {
+         {
+            constraints = {
+               {
+                  op = ">=",
+                  version = {
+                     5, 1, string = "5.1"
+                  }
+               }
+            },
+            name = "lua"
+         }
+      }
+   },
+   binaryheap = {
+      ["0.4-1"] = {
+         {
+            constraints = {
+               {
+                  op = ">=",
+                  version = {
+                     5, 1, string = "5.1"
+                  }
+               }
+            },
+            name = "lua"
+         }
+      }
+   },
+   daemonparts = {
+      ["3.2-1"] = {
+         {
+            constraints = {
+               {
+                  op = ">=",
+                  version = {
+                     5, 4, string = "5.4"
+                  }
+               },
+               {
+                  op = "<",
+                  version = {
+                     5, 5, string = "5.5"
+                  }
+               }
+            },
+            name = "lua"
+         },
+         {
+            constraints = {},
+            name = "lunix"
+         },
+         {
+            constraints = {},
+            name = "cqueues"
+         }
+      }
+   },
+   dkjson = {
+      ["2.8-1"] = {
+         {
+            constraints = {
+               {
+                  op = ">=",
+                  version = {
+                     5, 1, string = "5.1"
+                  }
+               },
+               {
+                  op = "<",
+                  version = {
+                     5, 5, string = "5.5"
+                  }
+               }
+            },
+            name = "lua"
+         }
+      }
+   },
+   fifo = {
+      ["0.2-0"] = {
+         {
+            constraints = {},
+            name = "lua"
+         }
+      }
+   },
+   http = {
+      ["0.4-0"] = {
+         {
+            constraints = {
+               {
+                  op = ">=",
+                  version = {
+                     5, 1, string = "5.1"
+                  }
+               }
+            },
+            name = "lua"
+         },
+         {
+            constraints = {
+               {
+                  op = ">=",
+                  version = {
+                     0, 3, string = "0.3"
+                  }
+               }
+            },
+            name = "compat53"
+         },
+         {
+            constraints = {},
+            name = "bit32"
+         },
+         {
+            constraints = {
+               {
+                  op = ">=",
+                  version = {
+                     20161214, string = "20161214"
+                  }
+               }
+            },
+            name = "cqueues"
+         },
+         {
+            constraints = {
+               {
+                  op = ">=",
+                  version = {
+                     20161208, string = "20161208"
+                  }
+               }
+            },
+            name = "luaossl"
+         },
+         {
+            constraints = {
+               {
+                  op = ">=",
+                  version = {
+                     0, 2, 0, string = "0.2.0"
+                  }
+               }
+            },
+            name = "basexx"
+         },
+         {
+            constraints = {},
+            name = "lpeg"
+         },
+         {
+            constraints = {
+               {
+                  op = ">=",
+                  version = {
+                     0, 5, string = "0.5"
+                  }
+               }
+            },
+            name = "lpeg_patterns"
+         },
+         {
+            constraints = {
+               {
+                  op = ">=",
+                  version = {
+                     0, 3, string = "0.3"
+                  }
+               }
+            },
+            name = "binaryheap"
+         },
+         {
+            constraints = {},
+            name = "fifo"
+         }
+      }
+   },
+   lpeg_patterns = {
+      ["0.5-0"] = {
+         {
+            constraints = {},
+            name = "lua"
+         },
+         {
+            constraints = {},
+            name = "lpeg"
+         }
+      }
+   },
+   lustache = {
+      ["1.3.1-0"] = {
+         {
+            constraints = {
+               {
+                  op = ">=",
+                  version = {
+                     5, 1, string = "5.1"
+                  }
+               }
+            },
+            name = "lua"
+         }
+      }
+   },
+   perihelion = {
+      ["0.16-1"] = {
+         {
+            constraints = {
+               {
+                  op = ">=",
+                  version = {
+                     5, 1, string = "5.1"
+                  }
+               }
+            },
+            name = "lua"
+         },
+         {
+            constraints = {
+               {
+                  op = "<=",
+                  version = {
+                     5, 4, string = "5.4"
+                  }
+               }
+            },
+            name = "lua"
+         }
+      }
+   }
+}
+modules = {
+   basexx = {
+      "basexx/0.4.1-1"
+   },
+   binaryheap = {
+      "binaryheap/0.4-1"
+   },
+   ["daemonparts.config_loader"] = {
+      "daemonparts/3.2-1"
+   },
+   ["daemonparts.corewait.init"] = {
+      "daemonparts/3.2-1"
+   },
+   ["daemonparts.corewait.instance"] = {
+      "daemonparts/3.2-1"
+   },
+   ["daemonparts.corewait.signal"] = {
+      "daemonparts/3.2-1"
+   },
+   ["daemonparts.daemonize"] = {
+      "daemonparts/3.2-1"
+   },
+   ["daemonparts.output.descriptor"] = {
+      "daemonparts/3.2-1"
+   },
+   ["daemonparts.output.file"] = {
+      "daemonparts/3.2-1"
+   },
+   ["daemonparts.output.init"] = {
+      "daemonparts/3.2-1"
+   },
+   ["daemonparts.output.syslog"] = {
+      "daemonparts/3.2-1"
+   },
+   ["daemonparts.output.table"] = {
+      "daemonparts/3.2-1"
+   },
+   ["daemonparts.process.init"] = {
+      "daemonparts/3.2-1"
+   },
+   ["daemonparts.process.monitor"] = {
+      "daemonparts/3.2-1"
+   },
+   ["daemonparts.process.pool"] = {
+      "daemonparts/3.2-1"
+   },
+   dkjson = {
+      "dkjson/2.8-1"
+   },
+   fifo = {
+      "fifo/0.2-0"
+   },
+   ["http.bit"] = {
+      "http/0.4-0"
+   },
+   ["http.client"] = {
+      "http/0.4-0"
+   },
+   ["http.compat.prosody"] = {
+      "http/0.4-0"
+   },
+   ["http.compat.socket"] = {
+      "http/0.4-0"
+   },
+   ["http.connection_common"] = {
+      "http/0.4-0"
+   },
+   ["http.cookie"] = {
+      "http/0.4-0"
+   },
+   ["http.h1_connection"] = {
+      "http/0.4-0"
+   },
+   ["http.h1_reason_phrases"] = {
+      "http/0.4-0"
+   },
+   ["http.h1_stream"] = {
+      "http/0.4-0"
+   },
+   ["http.h2_connection"] = {
+      "http/0.4-0"
+   },
+   ["http.h2_error"] = {
+      "http/0.4-0"
+   },
+   ["http.h2_stream"] = {
+      "http/0.4-0"
+   },
+   ["http.headers"] = {
+      "http/0.4-0"
+   },
+   ["http.hpack"] = {
+      "http/0.4-0"
+   },
+   ["http.hsts"] = {
+      "http/0.4-0"
+   },
+   ["http.proxies"] = {
+      "http/0.4-0"
+   },
+   ["http.request"] = {
+      "http/0.4-0"
+   },
+   ["http.server"] = {
+      "http/0.4-0"
+   },
+   ["http.socks"] = {
+      "http/0.4-0"
+   },
+   ["http.stream_common"] = {
+      "http/0.4-0"
+   },
+   ["http.tls"] = {
+      "http/0.4-0"
+   },
+   ["http.util"] = {
+      "http/0.4-0"
+   },
+   ["http.version"] = {
+      "http/0.4-0"
+   },
+   ["http.websocket"] = {
+      "http/0.4-0"
+   },
+   ["http.zlib"] = {
+      "http/0.4-0"
+   },
+   ["lpeg_patterns.IPv4"] = {
+      "lpeg_patterns/0.5-0"
+   },
+   ["lpeg_patterns.IPv6"] = {
+      "lpeg_patterns/0.5-0"
+   },
+   ["lpeg_patterns.core"] = {
+      "lpeg_patterns/0.5-0"
+   },
+   ["lpeg_patterns.email"] = {
+      "lpeg_patterns/0.5-0"
+   },
+   ["lpeg_patterns.http"] = {
+      "lpeg_patterns/0.5-0"
+   },
+   ["lpeg_patterns.language"] = {
+      "lpeg_patterns/0.5-0"
+   },
+   ["lpeg_patterns.phone"] = {
+      "lpeg_patterns/0.5-0"
+   },
+   ["lpeg_patterns.uri"] = {
+      "lpeg_patterns/0.5-0"
+   },
+   ["lpeg_patterns.util"] = {
+      "lpeg_patterns/0.5-0"
+   },
+   lustache = {
+      "lustache/1.3.1-0"
+   },
+   ["lustache.context"] = {
+      "lustache/1.3.1-0"
+   },
+   ["lustache.renderer"] = {
+      "lustache/1.3.1-0"
+   },
+   ["lustache.scanner"] = {
+      "lustache/1.3.1-0"
+   },
+   perihelion = {
+      "perihelion/0.16-1"
+   },
+   ["perihelion.session"] = {
+      "perihelion/0.16-1"
+   },
+   ["perihelion.session.file"] = {
+      "perihelion/0.16-1"
+   },
+   ["perihelion.session.memory"] = {
+      "perihelion/0.16-1"
+   },
+   ["perihelion.session.sql"] = {
+      "perihelion/0.16-1"
+   },
+   tinyyaml = {
+      "api7-lua-tinyyaml/0.4.4-0"
+   }
+}
+repository = {
+   ["api7-lua-tinyyaml"] = {
+      ["0.4.4-0"] = {
+         {
+            arch = "installed",
+            commands = {},
+            dependencies = {},
+            modules = {
+               tinyyaml = "tinyyaml.lua"
+            }
+         }
+      }
+   },
+   basexx = {
+      ["0.4.1-1"] = {
+         {
+            arch = "installed",
+            commands = {},
+            dependencies = {},
+            modules = {
+               basexx = "basexx.lua"
+            }
+         }
+      }
+   },
+   binaryheap = {
+      ["0.4-1"] = {
+         {
+            arch = "installed",
+            commands = {},
+            dependencies = {},
+            modules = {
+               binaryheap = "binaryheap.lua"
+            }
+         }
+      }
+   },
+   daemonparts = {
+      ["3.2-1"] = {
+         {
+            arch = "installed",
+            commands = {},
+            dependencies = {},
+            modules = {
+               ["daemonparts.config_loader"] = "daemonparts/config_loader.lua",
+               ["daemonparts.corewait.init"] = "daemonparts/corewait/init.lua",
+               ["daemonparts.corewait.instance"] = "daemonparts/corewait/instance.lua",
+               ["daemonparts.corewait.signal"] = "daemonparts/corewait/signal.lua",
+               ["daemonparts.daemonize"] = "daemonparts/daemonize.lua",
+               ["daemonparts.output.descriptor"] = "daemonparts/output/descriptor.lua",
+               ["daemonparts.output.file"] = "daemonparts/output/file.lua",
+               ["daemonparts.output.init"] = "daemonparts/output/init.lua",
+               ["daemonparts.output.syslog"] = "daemonparts/output/syslog.lua",
+               ["daemonparts.output.table"] = "daemonparts/output/table.lua",
+               ["daemonparts.process.init"] = "daemonparts/process/init.lua",
+               ["daemonparts.process.monitor"] = "daemonparts/process/monitor.lua",
+               ["daemonparts.process.pool"] = "daemonparts/process/pool.lua"
+            }
+         }
+      }
+   },
+   dkjson = {
+      ["2.8-1"] = {
+         {
+            arch = "installed",
+            commands = {},
+            dependencies = {},
+            modules = {
+               dkjson = "dkjson.lua"
+            }
+         }
+      }
+   },
+   fifo = {
+      ["0.2-0"] = {
+         {
+            arch = "installed",
+            commands = {},
+            dependencies = {},
+            modules = {
+               fifo = "fifo.lua"
+            }
+         }
+      }
+   },
+   http = {
+      ["0.4-0"] = {
+         {
+            arch = "installed",
+            commands = {},
+            dependencies = {
+               basexx = "0.4.1-1",
+               binaryheap = "0.4-1",
+               fifo = "0.2-0",
+               lpeg_patterns = "0.5-0"
+            },
+            modules = {
+               ["http.bit"] = "http/bit.lua",
+               ["http.client"] = "http/client.lua",
+               ["http.compat.prosody"] = "http/compat/prosody.lua",
+               ["http.compat.socket"] = "http/compat/socket.lua",
+               ["http.connection_common"] = "http/connection_common.lua",
+               ["http.cookie"] = "http/cookie.lua",
+               ["http.h1_connection"] = "http/h1_connection.lua",
+               ["http.h1_reason_phrases"] = "http/h1_reason_phrases.lua",
+               ["http.h1_stream"] = "http/h1_stream.lua",
+               ["http.h2_connection"] = "http/h2_connection.lua",
+               ["http.h2_error"] = "http/h2_error.lua",
+               ["http.h2_stream"] = "http/h2_stream.lua",
+               ["http.headers"] = "http/headers.lua",
+               ["http.hpack"] = "http/hpack.lua",
+               ["http.hsts"] = "http/hsts.lua",
+               ["http.proxies"] = "http/proxies.lua",
+               ["http.request"] = "http/request.lua",
+               ["http.server"] = "http/server.lua",
+               ["http.socks"] = "http/socks.lua",
+               ["http.stream_common"] = "http/stream_common.lua",
+               ["http.tls"] = "http/tls.lua",
+               ["http.util"] = "http/util.lua",
+               ["http.version"] = "http/version.lua",
+               ["http.websocket"] = "http/websocket.lua",
+               ["http.zlib"] = "http/zlib.lua"
+            }
+         }
+      }
+   },
+   lpeg_patterns = {
+      ["0.5-0"] = {
+         {
+            arch = "installed",
+            commands = {},
+            dependencies = {},
+            modules = {
+               ["lpeg_patterns.IPv4"] = "lpeg_patterns/IPv4.lua",
+               ["lpeg_patterns.IPv6"] = "lpeg_patterns/IPv6.lua",
+               ["lpeg_patterns.core"] = "lpeg_patterns/core.lua",
+               ["lpeg_patterns.email"] = "lpeg_patterns/email.lua",
+               ["lpeg_patterns.http"] = "lpeg_patterns/http.lua",
+               ["lpeg_patterns.language"] = "lpeg_patterns/language.lua",
+               ["lpeg_patterns.phone"] = "lpeg_patterns/phone.lua",
+               ["lpeg_patterns.uri"] = "lpeg_patterns/uri.lua",
+               ["lpeg_patterns.util"] = "lpeg_patterns/util.lua"
+            }
+         }
+      }
+   },
+   lustache = {
+      ["1.3.1-0"] = {
+         {
+            arch = "installed",
+            commands = {},
+            dependencies = {},
+            modules = {
+               lustache = "lustache.lua",
+               ["lustache.context"] = "lustache/context.lua",
+               ["lustache.renderer"] = "lustache/renderer.lua",
+               ["lustache.scanner"] = "lustache/scanner.lua"
+            }
+         }
+      }
+   },
+   perihelion = {
+      ["0.16-1"] = {
+         {
+            arch = "installed",
+            commands = {},
+            dependencies = {},
+            modules = {
+               perihelion = "perihelion.lua",
+               ["perihelion.session"] = "perihelion/session.lua",
+               ["perihelion.session.file"] = "perihelion/session/file.lua",
+               ["perihelion.session.memory"] = "perihelion/session/memory.lua",
+               ["perihelion.session.sql"] = "perihelion/session/sql.lua"
+            }
+         }
+      }
+   }
+}

@@ -1,0 +1,17 @@
+rock_manifest = {
+   doc = {
+      LICENSE = "8d4aea5027c692b0145fa56c981614c4"
+   },
+   lua = {
+      perihelion = {
+         session = {
+            ["file.lua"] = "317fea42ae0534cfd5f4dd76e5bcb78c",
+            ["memory.lua"] = "fafce69f82943be300a567649bb7b423",
+            ["sql.lua"] = "02cf1e022dda9bfe979776f1ee6ac5e4"
+         },
+         ["session.lua"] = "462f1012ba26ce60a56d5ced0da6684b"
+      },
+      ["perihelion.lua"] = "4fae990b42f85834261145e398abd079"
+   },
+   ["perihelion-0.16-1.rockspec"] = "26dc1d0f385a045f4220881c4d356152"
+}
