@@ -199,11 +199,13 @@ The 'markov', 'link_array', and 'link' sections in the YAML portion are
 used to define variables that are passed to the templating engine.
 
 - markov: Fills a variable with markov babble.
+
   - name: Variable name passed to the template.
   - min: Minimum number of 'tokens' - words, essentially - of markov slop to generate.
   - max: Maximum number of tokens
 
 - link_array: Creates a variable sized array of links.
+
   - min_count: Size of the smallest list of links to generate
   - max_count: Maximum number of links in the array
   - depth_min: The number smallest of words (from the given wordlist) to put into a URL,
