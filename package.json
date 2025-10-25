@@ -1,0 +1,15 @@
+{
+  "name": "artificial-inferno",
+  "version": "1.0.0",
+  "description": "Installation project encouraging audience to resist AI by engaging in creativity and play. Originally made for ASU AME Capstone.",
+  "author": "Thalia Wood, Brodie Sheridan, Ben Chatfield, Maeve Byrne",
+  "license": "MIT",
+  "repository": "github:polygeist111/artificial-inferno",
+  "homepage": "https://github.com/polygeist111/artificial-inferno",
+  "engines": {
+    "node": "^24.9.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1"
+  }
+}

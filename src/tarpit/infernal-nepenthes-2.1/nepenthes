@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ -z "$LUA_APP_LOCATION" ]; then
-	LUA_APP_LOCATION=`pwd`
+	LUA_APP_LOCATION=$(pwd)
 fi
 
 export LUA_APP_LOCATION
@@ -14,11 +14,11 @@ fi
 config=$1
 shift
 
-if [ -z "ULIMIT_FILES" ]; then
-	ulimit -n $ULIMIT_FILES
+if [ -z "$ULIMIT_FILES" ]; then
+	ulimit -n "$ULIMIT_FILES"
 fi
 
 exec /usr/bin/env lua5.4		\
-	$LUA_APP_LOCATION/core/microdyne.lua	\
-	$LUA_APP_LOCATION/core/nepenthes.lua	\
-	$config
+	"$LUA_APP_LOCATION"/core/microdyne.lua	\
+	"$LUA_APP_LOCATION"/core/nepenthes.lua	\
+	"$config"
