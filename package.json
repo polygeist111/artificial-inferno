@@ -9,6 +9,9 @@
   "engines": {
     "node": "^22.20.0"
   },
+  "scripts": {
+    "format": "prettier --write ."
+  },
   "devDependencies": {
     "prettier": "^2.5.1"
   }
