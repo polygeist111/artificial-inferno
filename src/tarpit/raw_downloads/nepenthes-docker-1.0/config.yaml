@@ -1,16 +1,16 @@
 --- # Nepenthes Config
 
-http_host: '::'
+http_host: "::"
 http_port: 8893
-templates: 
-  - '/usr/nepenthes/templates'
-  - '/vol/nepenthes/templates'
-  
-seed_file: '/vol/nepenthes/seed.txt'
+templates:
+  - "/usr/nepenthes/templates"
+  - "/vol/nepenthes/templates"
+
+seed_file: "/vol/nepenthes/seed.txt"
 
 silos:
   - name: default
-    wordlist: '/usr/share/dict/usa'
-    corpus: '/vol/nepenthes/corpus.txt'
+    wordlist: "/usr/share/dict/usa"
+    corpus: "/vol/nepenthes/corpus.txt"
     min_wait: 4
     max_wait: 25
