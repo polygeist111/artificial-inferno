@@ -20,8 +20,8 @@ concurrency:
 
 permissions: read-all
 
+# adapted from https://mskelton.medium.com/auto-formatting-code-using-prettier-and-github-actions-ed458f58b7df
 jobs:
-  # adapted from https://mskelton.medium.com/auto-formatting-code-using-prettier-and-github-actions-ed458f58b7df
   format:
     runs-on: ubuntu-latest
     steps:
@@ -29,14 +29,18 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
       - uses: actions/setup-node@v2
+        with:
+          node-version: "14.x"
+      - run: npm ci
       - run: prettier --write .
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Apply formatting changes
           branch: ${{ github.head_ref }}
-
+          
   call-super-linter:
+    needs: format
     name: Call Super-Linter
 
     permissions:
