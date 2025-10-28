@@ -2,7 +2,7 @@
 
 Installation project encouraging audience to resist AI by engaging in creativity and play. Originally made for ASU AME Capstone.
 
-[![Super-Linter](https://github.com/<OWNER>/<REPOSITORY>/actions/workflows/<WORKFLOW_FILE_NAME>/badge.svg)](https://github.com/marketplace/actions/super-linter)
+[![Super-Linter](https://github.com/polygeist111/artificial-inferno/actions/workflows/format_and_lint.yml/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
