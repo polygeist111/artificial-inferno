@@ -22,27 +22,6 @@ permissions: read-all
 
 # adapted from https://mskelton.medium.com/auto-formatting-code-using-prettier-and-github-actions-ed458f58b7df
 jobs:
-  # format:
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: write
-  #     actions: write
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         ref: ${{ github.head_ref }}
-  #         token: ${{ secrets.WORKFLOW_TOKEN }}
-  #     - uses: actions/setup-node@v2
-  #       with:
-  #         node-version: "^22.20.0"
-  #     - run: npm ci
-  #     - run: npm run format
-  #     - name: Commit changes
-  #       uses: stefanzweifel/git-auto-commit-action@v4
-  #       with:
-  #         commit_message: Apply formatting changes
-  #         branch: ${{ github.head_ref }}
-
   call-super-linter:
     #  needs: format
     name: Call Super-Linter
@@ -63,7 +42,7 @@ jobs:
     with:
       ### For a DevOps-focused repository. Prevents some code-language linters from running
       ### defaults to false
-      devops-only: false
+      # devops-only: false
 
       ### A regex to exclude files from linting
       ### defaults to empty
