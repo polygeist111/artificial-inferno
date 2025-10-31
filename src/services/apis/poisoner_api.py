@@ -35,13 +35,15 @@ class PoisonTextApi(Resource):
     
     def get(self) -> str:
         """
-        Return a generated string of X (default 3) sentences from the markov chain
+        Return a generated string of X (1 <= X <= 100, default 3) sentences from the markov chain
         Pass number of sentences as an int named "numsentences"
         If generating numsentences fails, it will try to fall back to 3 sentences. 
         If that also fails, it will return an error string.
         """
         args = text_out_parser.parse_args()
         numsentences = args["numsentences"] or 3
+        if numsentences < 1: numsentences = 1
+        if numsentences > 100: numsentences = 100
         # Pull sentences from the model
         output = core.markov.getXSentences(numsentences)
         # If it fails on user number, falls back to three sentences
