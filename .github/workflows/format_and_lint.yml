@@ -1,6 +1,7 @@
 ---
 # template source: https://github.com/bretfisher/super-linter-workflow/blob/main/templates/call-super-linter.yaml
 name: Lint Code Base
+run-name: ${{ github.event.inputs.custom_run_name || github.workflow }}
 
 on:
   # run anytime a PR is merged to main or a direct push to main
@@ -12,6 +13,11 @@ on:
 
   # run on demand
   workflow_dispatch:
+    inputs:
+      custom-run-name:
+        description: "Custom name for this Actions run"
+        required: false
+        type: string
 
 # cancel any previously-started, yet still active runs of this workflow on the same branch
 concurrency:
@@ -36,6 +42,7 @@ jobs:
 
     # FIXME: customize uri to point to your own reusable linter repository
     uses: polygeist111/super-linter-workflow/.github/workflows/reusable-super-linter.yaml@main
+    # TODO: update url to point to gb reusable linter, not thalia's
 
     ### Optional settings examples
 
