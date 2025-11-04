@@ -1,10 +1,21 @@
+"""
+API definition for poisoner functions
+"""
+
+### Imports
+# Standard
+
+# Third Party
 import markovify
-from http import HTTPStatus
 from flask import request, send_file
 from flask_restx import Namespace, Resource
 from werkzeug.datastructures import FileStorage
+from http import HTTPStatus
+
+# Local
 import core.markov
 import core.images
+
 
 poison_ns = Namespace("poison", description="Poisoning operations")
 

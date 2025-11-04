@@ -1,6 +1,17 @@
+"""
+API initializer
+"""
+
+### Imports
+# Standard
+
+# Third Party
 from flask_restx import Api
 
-from .poisoner_api import poison_ns
+# Local
+from poisoner_api import poison_ns
+
+
 
 api = Api(
     version='1.0',

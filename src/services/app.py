@@ -1,7 +1,18 @@
-from flask import Flask
+"""
+Entrypoint for Poisoner API
+"""
+
+### Imports
+# Standard
 from apis import api
 
+# Third Party
+from flask import Flask
+
+# Local
 from core.markov import initMarkovGenerator
+
+
 
 app = Flask(__name__)
 api.init_app(app)

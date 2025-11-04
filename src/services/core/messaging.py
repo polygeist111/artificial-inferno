@@ -2,10 +2,6 @@
 Message formatter for all production console output
 """
 
-#
-# Created by Thalia Wood on 11/04/25
-#
-
 ### Imports
 #Standard
 import enum as Enum
@@ -13,7 +9,7 @@ import enum as Enum
 # Third Party
 
 # Local
-import global_vars
+import services.global_vars as global_vars
 
 
 

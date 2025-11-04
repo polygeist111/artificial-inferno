@@ -1,8 +1,18 @@
+"""
+Module to handle all actions dealing with image files
+"""
+
+### Imports
+# Standard
 import os
 import time
 import threading
 import random
+
+# Third Party
 from werkzeug.datastructures import FileStorage
+
+#Local
 
 image_directory = "data/images/"
 
