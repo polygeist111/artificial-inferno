@@ -6,7 +6,6 @@ API definition for poisoner functions
 # Standard
 
 # Third Party
-import markovify
 from flask import request, send_file
 from flask_restx import Namespace, Resource
 from werkzeug.datastructures import FileStorage

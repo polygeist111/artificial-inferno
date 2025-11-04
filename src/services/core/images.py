@@ -13,6 +13,7 @@ import random
 from werkzeug.datastructures import FileStorage
 
 #Local
+import messaging
 
 image_directory = "data/images/"
 
@@ -35,7 +36,7 @@ def getImageFromBuffer() -> str:
     images = [entry for entry in all_images if os.path.isfile(os.path.join(image_directory, entry))]
 
     if not images:
-        print(f"No files found in directory '{image_directory}'.")
+        messaging.console_out(f"No files found in directory '{image_directory}'.", messaging.LogLevel.FAILURE)
         return "No image found"
 
     # Choose a random file from the list
@@ -56,7 +57,7 @@ def deleteUsedResource(filepath) -> bool:
     if os.path.exists(filepath):
         os.remove(filepath)
         return True
-    print(f"Filepath {filepath} cannot be deleted, does not exist")
+    messaging.console_out(f"Filepath {filepath} cannot be deleted, does not exist", messaging.LogLevel.FAILURE)
     return False
 
 # TODO: consider breaking random file selection out into core helper function, same with file deletion

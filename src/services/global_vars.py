@@ -7,10 +7,9 @@ Globals and hardcoded sample values for program execution
 import enum as Enum
 
 # Third Party
-import markovify
+from markovify import Text as markovText
 
 # Local
-
 
 
 
@@ -18,7 +17,7 @@ import markovify
 CORPUS_MAX_COUNT = 10001 # 1 is reserved for seed corpus, others are user-generated
 
 ### Runtime Vars
-markov_chain: markovify.Text = None
+markov_chain: markovText = None
 corpus_count: int = 0
 
 # Colors

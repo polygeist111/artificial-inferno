@@ -19,7 +19,7 @@ corpus_directory = "data/corpora/" # path is resolved relative to app.py, not ma
 
 # called from app.py on server start only
 def initMarkovGenerator():
-    print("App starting...training markov model on corpora:")
+    messaging.console_out("App starting...training markov model on corpora:", messaging.LogLevel.INFO)
     global_vars.markov_chain = None
     for (dirpath, _, filenames) in os.walk(corpus_directory):
         for filename in filenames:
@@ -29,10 +29,10 @@ def initMarkovGenerator():
                     global_vars.markov_chain = markovify.combine(models=[global_vars.markov_chain, model])
                 else:
                     global_vars.markov_chain = model
-            print(f"\t{filename}")
+            messaging.console_out(f"\t{filename}", messaging.LogLevel.INFO)
             global_vars.corpus_count += 1
     pruneCorpus()
-    print("Markov model trained.")
+    messaging.console_out("Markov model trained", messaging.LogLevel.SUCCESS)
 
 
 # corpus directory functions as a FIFO queue based on write timestamps, with the default corpus text protected from deletion
@@ -57,15 +57,15 @@ def pruneCorpus():
                 os.remove(file_to_delete)
                 global_vars.corpus_count -= 1 # decrement corpus directory counter
                 files = files[1:] # drop deleted file from filename list
-                print(f"File '{file_to_delete}' deleted successfully.")
+                messaging.console_out(f"File '{file_to_delete}' deleted successfully.", messaging.LogLevel.SUCCESS)
 
             except OSError as e:
-                print(f"Error deleting file '{file_to_delete}': {e}")
+                messaging.console_out(f"Error deleting file '{file_to_delete}': {e}", messaging.LogLevel.INFO)
 
 
     
 def addToCorpus(input: str):
-    print("Adding {input} to corpus")
+    messaging.console_out(f"Adding {input} to corpus", messaging.LogLevel.INFO)
 
     # create new corpus file with input saved to it
     write_time = time.time()
@@ -81,12 +81,10 @@ def addToCorpus(input: str):
 
 
 def getXSentences(sentenceCount: int) -> str:
-    print(f"Getting {sentenceCount} sentences")
-    print(f"Test sentence: {global_vars.markov_chain.make_sentence(state_size = 2, test_output = False)}")
+    messaging.console_out(f"Getting {sentenceCount} sentences", messaging.LogLevel.INFO)
     output_block: str = ""
     for _ in range(0, sentenceCount):
         sentence = global_vars.markov_chain.make_sentence(state_size = 2, test_output = False)
-        print(sentence)
         if sentence: output_block += f"{sentence} "
     # remove any weird unicode escapes
     output_block = output_block.encode('ascii',errors='ignore').decode('ascii')
