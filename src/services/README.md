@@ -7,3 +7,37 @@ Clean data is fed to the poisoner and processed. For one-off media (music, image
 
 ## Sources
 Most data is sourced from user inputs. Default Corpus is a cleaned and unique list of the sample paragraphs from the dataset [Public Perception of AI](https://www.kaggle.com/datasets/saurabhshahane/public-perception-of-ai/data) posted by Saurabh Shahane to Kaggle
+
+## Testing Locally
+To run the API on localhost, navigate to the `services` subdirectory and execute `flask run --debug`. By default, it runs on port 5000. Below are some sample commands to test the API:
+
+### Text
+Text is handled at the /poison/text endpoint.
+When reading text, you can specify a number of sentences to return between 1 and 100. Anything outside these bounds will be coerced to the nearer bound. The default sentence count is 3, and if the specified amount fails a fallback attempt is made at the default amount.<br/><br/>
+**READ**<br/>
+No specification:
+```
+curl -X GET \
+  127.0.0.1:5000/poison/text
+```
+Requesting 5 sentences:
+```
+curl -X GET \
+  -H "Content-Type: application/json" \
+  -d '{"numsentences": 5}' \
+  127.0.0.1:5000/poison/text
+```
+**WRITE**<br/>
+When writing text, you must specify the content. This content will both be added to the active Markov model and saved in plaintext for model training on server restart. Please do not upload any sensitive information. No personally identifying information will be saved, only the content string as uploaded and the timestamp of its reception.
+```
+curl -X POST \                        
+  -H "Content-Type: application/json" \
+  -d '{"content": "He seems shy, grateful, sometimes sad and always, to Leigh Anne, an open source effort to create a blueprint drawing for this definition. Made by Mr. McQueen for Givenchy Haute Couture. The project  a simplifying analogy rather than automate, flight. He begins with what Omen says. Why caused Stanley to swerve off the fiscal cliff, suggested Lou Dobbs on Fox Business News. This occasionally dark but wonderfully original simulation occasionally suggests a sequence of moves the students in the near future, Frank, an economics professor at the New York Times, just wait until there was existed in the ocean. The history of tech tells A.I. backers to hang in the Bits blog writes. An obituary on Thursday a specially configured version of that conceit helped to smother the blaze, giving fire crews a chance of transforming into other vehicles, artificial intelligence system that could help people to take over BellSouth -- could give the whole point of the spectrum, too. In particular, an artificial intelligence hidden somewhere in the shuttles, was military. The body is a lot of things to buy. "}' \
+  127.0.0.1:5000/poison/text
+```
+### Images
+**READ**<br/>
+**WRITE**<br/>
+### Sound
+**READ**<br/>
+**WRITE**<br/>

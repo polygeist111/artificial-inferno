@@ -4,7 +4,7 @@ Globals and hardcoded sample values for program execution
 
 ### Imports
 # Standard
-import enum as Enum
+from enum import Enum
 
 # Third Party
 from markovify import Text as markovText
@@ -17,7 +17,8 @@ from markovify import Text as markovText
 CORPUS_MAX_COUNT = 10001 # 1 is reserved for seed corpus, others are user-generated
 
 ### Runtime Vars
-markov_chain: markovText = None
+#markov_chain: Optional[markovText] = None
+markov_chain: markovText
 corpus_count: int = 0
 
 # Colors
@@ -26,24 +27,25 @@ class Colors(Enum):
     Enum definition of most common ANSI color escapes
     """
     # Standard
-    STANDARD_BLACK = "\e[0;30m"
-    STANDARD_RED = "\e[0;31m"
-    STANDARD_GREEN = "\e[0;32m"
-    STANDARD_YELLOW = "\e[0;33m"
-    STANDARD_BLUE = "\e[0;34m"
-    STANDARD_PURPLE = "\e[0;35m"
-    STANDARD_CYAN = "\e[0;36m"
-    STANDARD_WHITE = "\e[0;37m"
+    STANDARD_BLACK = "\033[30m"
+    STANDARD_RED = "\033[31m"
+    STANDARD_GREEN = "\033[32m"
+    STANDARD_YELLOW = "\033[33m"
+    STANDARD_BLUE = "\033[34m"
+    STANDARD_PURPLE = "\033[35m"
+    STANDARD_CYAN = "\033[36m"
+    STANDARD_WHITE = "\033[37m"
 
     # Background
-    BACKGROUND_BLACK = "\e[0;40m"
-    BACKGROUND_RED = "\e[0;41m"
-    BACKGROUND_GREEN = "\e[0;42m"
-    BACKGROUND_YELLOW = "\e[0;43m"
-    BACKGROUND_BLUE = "\e[0;44m"
-    BACKGROUND_PURPLE = "\e[0;45m"
-    BACKGROUND_CYAN = "\e[0;46m"
-    BACKGROUND_WHITE = "\e[0;47m"
+    BACKGROUND_BLACK = "\033[40m"
+    BACKGROUND_RED = "\033[41m"
+    BACKGROUND_GREEN = "\033[42m"
+    BACKGROUND_YELLOW = "\033[43m"
+    BACKGROUND_BLUE = "\033[44m"
+    BACKGROUND_PURPLE = "\033[45m"
+    BACKGROUND_CYAN = "\033[46m"
+    BACKGROUND_WHITE = "\033[47m"
 
-    # Reset
-    RESET = "\e[0m"
+    # Special
+    RESET = "\033[0m"
+    ESC_IN_LINE = "\033[K"

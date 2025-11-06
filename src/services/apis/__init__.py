@@ -9,7 +9,8 @@ API initializer
 from flask_restx import Api
 
 # Local
-from poisoner_api import poison_ns
+from .poisoner_api import poison_ns
+
 
 
 

@@ -11,8 +11,8 @@ import time
 import markovify
 
 # Local
-import services.global_vars as global_vars
-import messaging
+import global_vars
+import core.messaging as messaging
 
 
 corpus_directory = "data/corpora/" # path is resolved relative to app.py, not markov.py
@@ -45,12 +45,12 @@ def pruneCorpus():
             entries = os.listdir(corpus_directory)
             
             # Filter for actual files
-            files = [f for f in entries if os.path.isfile(os.path.join(corpus_directory), f)]
+            files = [f for f in entries if os.path.isfile(os.path.join(corpus_directory), f)] # type: ignore
         except FileNotFoundError:
             return None # Directory not found
         
         # delete first file (oldest) until under the threshold
-        while global_vars.corpus_count > global_vars.CORPUS_MAX_COUNT and files.count > 2:
+        while global_vars.corpus_count > global_vars.CORPUS_MAX_COUNT and len(files) > 2:
             file_to_delete = files[0]
             # no path exists check as we got the path direct from the directory
             try:

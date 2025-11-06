@@ -13,7 +13,7 @@ import random
 from werkzeug.datastructures import FileStorage
 
 #Local
-import messaging
+import core.messaging as messaging
 
 image_directory = "data/images/"
 
@@ -46,7 +46,7 @@ def getImageFromBuffer() -> str:
     random_file_path = os.path.join(image_directory, random_filename)
 
     # Schedule returned image for deletion in 30 seconds (assumes this is sufficient time for a download)
-    timer = threading.Timer(30, deleteUsedResource(random_file_path))
+    timer = threading.Timer(30, deleteUsedResource(random_file_path)) # type: ignore
     timer.start()
 
     return random_file_path
