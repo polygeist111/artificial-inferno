@@ -13,7 +13,7 @@ from http import HTTPStatus
 
 # Local
 import core.markov
-import core.images
+import core.filehandling
 
 
 poison_ns = Namespace("poison", description="Poisoning operations")
@@ -91,18 +91,23 @@ class PoisonImagesApi(Resource):
         if "image" not in request.files:
             poison_ns.abort(400, "No image file provided")
 
-        image_file = request.files['image']
+        image_file = request.files["image"]
 
         if not image_file.filename:
             poison_ns.abort(400, "No selected file")
 
-        status = core.images.saveImageFromPost(image_file)
-        if len(status) is 1 and status[0] is True:
+        status = core.filehandling.saveImageFromPost(image_file)
+        status_length = len(status)
+        if status_length == 1 and status[0] == 0:
             return "Resource added", 201
-        elif len(status) is 2 and status[0] is False:
+        elif status_length == 2 and status[0] == 1:
             poison_ns.abort(500, f"Error processing image: {str(status[1])}")
+        elif status_length == 1 and status[0] == 2:
+            poison_ns.abort(400, f"Error processing image: must be jpg")
+        elif status_length == 1 and status[0] == 3:
+            poison_ns.abort(500, f"Error processing file: must be image file (jpg)")
         else:
-            poison_ns.abort(500, f"Error processing image (bad function return): {str(status[1])}") # this should never happen
+            poison_ns.abort(500, f"Error processing image (bad function return)") # this should never happen
         
     
     # @poison_ns.expect(image_out_parser)
@@ -110,9 +115,9 @@ class PoisonImagesApi(Resource):
         """
         Return an image and remove it from the buffer
         """
-        image_path = core.images.getImageFromBuffer()
+        image_path = core.filehandling.getImageFromBuffer()
         
-        if image_path is "Image not found":
+        if image_path == "Image not found":
             poison_ns.abort(404, "Image not found")
             
         return send_file(image_path, as_attachment = True)

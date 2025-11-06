@@ -47,6 +47,8 @@ def console_out(message: str, level: LogLevel, newline: bool = True, exit_code: 
             error_prefix += "Incorrect Password\n"
         case 4:
             error_prefix += "Invalid Input\n"
+        case 5:
+            error_prefix += "Bad filetype\n"
 
     # Format usage_str
     if usage != "":

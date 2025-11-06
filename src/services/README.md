@@ -9,7 +9,7 @@ Clean data is fed to the poisoner and processed. For one-off media (music, image
 Most data is sourced from user inputs. Default Corpus is a cleaned and unique list of the sample paragraphs from the dataset [Public Perception of AI](https://www.kaggle.com/datasets/saurabhshahane/public-perception-of-ai/data) posted by Saurabh Shahane to Kaggle
 
 ## Testing Locally
-To run the API on localhost, navigate to the `services` subdirectory and execute `flask run --debug`. By default, it runs on port 5000. Below are some sample commands to test the API:
+To run the API on localhost, navigate to the `services` subdirectory and execute `flask run --debug`. By default, it runs on port 5000. Below are some sample commands to test the API, with the assumption that they're being called from the project root:
 
 ### Text
 Text is handled at the /poison/text endpoint.
@@ -36,8 +36,20 @@ curl -X POST \
   127.0.0.1:5000/poison/text
 ```
 ### Images
+Images are handled at the /poison/images endpoint
+The service does not perform any operations on images, it only buffers them for more efficient calling by the tarpit. As with text, no information is saved from the upload besides the timestamp of its reception and the file itself. Please only upload JPGs/JPEGs. All returned files will be suffixed .JPG.
 **READ**<br/>
+```
+curl --output dev-help/samples-output/requested-img.jpg -X GET \
+  127.0.0.1:5000/poison/images
+```
 **WRITE**<br/>
+Must be JPG/JPEG
+```
+curl -X POST \
+  -F "image=@dev-help/samples/rhino_owl_mask_gridview.jpeg" \
+  127.0.0.1:5000/poison/images
+```
 ### Sound
 **READ**<br/>
 **WRITE**<br/>

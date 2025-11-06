@@ -11,20 +11,33 @@ import random
 
 # Third Party
 from werkzeug.datastructures import FileStorage
+import filetype
 
 #Local
-import core.messaging as messaging
+from core.messaging import console_out, LogLevel
 
 image_directory = "data/images/"
 
 def saveImageFromPost(imageIn: FileStorage):
     write_time = time.time()
-    new_file_path = f"{image_directory}/corpus_{write_time}"
+    new_file_path = f"{image_directory}/image_{write_time}.jpg"
     try:
         imageIn.save(new_file_path)
-        return [True]
     except Exception as e:
-        return [False, e]
+        return [1, e]
+    
+    if filetype.is_image(new_file_path):
+        kind = filetype.guess(new_file_path)
+        if not (kind and kind.mime == "image/jpeg"):
+            deleteResource(new_file_path)
+            console_out(f"Uploaded file at {new_file_path} will not be saved: The file is an image, but filetype must be 'image/jpeg', not '{kind.mime if kind else 'an unknown type'}'.", LogLevel.FAILURE)
+            return [2] # fail because non jpg image
+    else:
+        deleteResource(new_file_path)
+        console_out(f"Uploaded file at {new_file_path} will not be saved: The file is not an image.", LogLevel.FAILURE)
+        return [3] # fail because nonimage file
+    
+    return [0] # success, jpg image
     
 
 
@@ -36,7 +49,7 @@ def getImageFromBuffer() -> str:
     images = [entry for entry in all_images if os.path.isfile(os.path.join(image_directory, entry))]
 
     if not images:
-        messaging.console_out(f"No files found in directory '{image_directory}'.", messaging.LogLevel.FAILURE)
+        console_out(f"No files found in directory '{image_directory}'.", LogLevel.FAILURE)
         return "No image found"
 
     # Choose a random file from the list
@@ -46,18 +59,20 @@ def getImageFromBuffer() -> str:
     random_file_path = os.path.join(image_directory, random_filename)
 
     # Schedule returned image for deletion in 30 seconds (assumes this is sufficient time for a download)
-    timer = threading.Timer(30, deleteUsedResource(random_file_path)) # type: ignore
+    timer = threading.Timer(30, deleteResource, args = (random_file_path,)) # type: ignore
     timer.start()
-
+    
+    print(f"\n\n{random_file_path}\n\n")
     return random_file_path
 
 
 
-def deleteUsedResource(filepath) -> bool:
+def deleteResource(filepath) -> bool:
     if os.path.exists(filepath):
         os.remove(filepath)
+        console_out(f"File at {filepath} successfully deleted.", LogLevel.SUCCESS)
         return True
-    messaging.console_out(f"Filepath {filepath} cannot be deleted, does not exist", messaging.LogLevel.FAILURE)
+    console_out(f"Filepath {filepath} cannot be deleted, does not exist", LogLevel.FAILURE)
     return False
 
 # TODO: consider breaking random file selection out into core helper function, same with file deletion
