@@ -15,12 +15,30 @@ import filetype
 
 #Local
 from core.messaging import console_out, LogLevel
+import global_vars
 
 image_directory = "data/images/"
+audio_directory = "data/audio/"
 
 def saveImageFromPost(imageIn: FileStorage):
+    """
+    Validates and saves image POSTed to the API
+    """
     write_time = time.time()
     new_file_path = f"{image_directory}/image_{write_time}.jpg"
+
+    # If image buffer is full, delete a random file
+    directory_has_space = validateDirectorySize(image_directory, global_vars.IMAGE_MAX_COUNT, True)
+    if directory_has_space == 1:
+        # Schedule returned image for deletion in 30 seconds (assumes this is sufficient time for a download)
+        # This is a safety delay to ensure an image currently being downloaded by another request is not deleted prior
+        console_out(f"Image buffer would be overflowed by file uploaded at {write_time}, queuing a random image file for deletion.", LogLevel.WARN)
+        timer = threading.Timer(global_vars.FILE_DELETION_DELAY, deleteResource, args = (getRandomFileInDirectory(image_directory),)) # type: ignore
+        timer.start()
+    elif directory_has_space == 2:
+        console_out(f"Image buffer would be significantly overflowed by file uploaded at {write_time}, deleting a random image file immediately.", LogLevel.WARN)
+        deleteResource(getRandomFileInDirectory(image_directory)) # if the image buffer is being overflowed, delete a file immediately at risk of failing a user request
+
     try:
         imageIn.save(new_file_path)
     except Exception as e:
@@ -42,32 +60,24 @@ def saveImageFromPost(imageIn: FileStorage):
 
 
 def getImageFromBuffer() -> str:
-    # Get a list of all files and subdirectories in the given path
-    all_images = os.listdir(image_directory)
-
-    # Filter out directories, keeping only files
-    images = [entry for entry in all_images if os.path.isfile(os.path.join(image_directory, entry))]
-
-    if not images:
-        console_out(f"No files found in directory '{image_directory}'.", LogLevel.FAILURE)
-        return "No image found"
-
-    # Choose a random file from the list
-    random_filename = random.choice(images)
-
-    # Construct the full path to the random file
-    random_file_path = os.path.join(image_directory, random_filename)
+    """
+    Returns the path to a random image in the buffer (for immediate serving), and queues it for local deletion
+    """
+    # Choose a random file from the image directory
+    random_file_path = getRandomFileInDirectory(image_directory)
 
     # Schedule returned image for deletion in 30 seconds (assumes this is sufficient time for a download)
-    timer = threading.Timer(30, deleteResource, args = (random_file_path,)) # type: ignore
+    timer = threading.Timer(global_vars.FILE_DELETION_DELAY, deleteResource, args = (random_file_path,)) # type: ignore
     timer.start()
-    
-    print(f"\n\n{random_file_path}\n\n")
+
     return random_file_path
 
 
 
-def deleteResource(filepath) -> bool:
+def deleteResource(filepath: str) -> bool:
+    """
+    Safely removes a resource at the given path
+    """
     if os.path.exists(filepath):
         os.remove(filepath)
         console_out(f"File at {filepath} successfully deleted.", LogLevel.SUCCESS)
@@ -75,5 +85,65 @@ def deleteResource(filepath) -> bool:
     console_out(f"Filepath {filepath} cannot be deleted, does not exist", LogLevel.FAILURE)
     return False
 
-# TODO: consider breaking random file selection out into core helper function, same with file deletion
-# TODO: add constraints on file addition, like corpora buffer
+
+
+def validateDirectorySize(directory_path: str, max_size: int, adding: bool) -> int:
+    """
+    Checks if a given directory contains fewer than the stated maximum number of files
+    """
+    files_in_dir = listDirectoryFiles(directory_path)
+    new_dir_size = len(files_in_dir)
+    if adding:
+        new_dir_size += 1
+
+    if new_dir_size <= max_size:
+        return 0
+    elif new_dir_size > max_size * 1.5: # safety check to prevent overflowing a directory buffer inside the file deletion window
+        return 2
+    return 1
+
+
+
+def listDirectoryFiles(directory_path: str) -> list[str]:
+    """
+    Lists all files (only files) in a given directory
+    """
+    filenames: list[str] = []
+    if os.path.exists(directory_path):
+        filenames = [entry for entry in os.listdir(directory_path) if os.path.isfile(os.path.join(directory_path, entry))]
+    else:
+        console_out(f"Filepath {directory_path} cannot be counted, does not exist", LogLevel.ERROR, exit_code = 6)
+    return filenames
+
+
+
+def getRandomFileInDirectory(directory_path: str) -> str:
+    """
+    Returns the full path to one file in a given directory, or an empty string if the directory contains no files
+    """
+    selected_file = ""
+    files = listDirectoryFiles(directory_path)
+    if len(files) > 0:
+        selected_file = os.path.join(directory_path, random.choice(files))
+    return selected_file
+
+
+
+def pruneBufferedFiles():
+    """
+    When called, randomly deletes files in image and audio directories until they meet their maximums
+    """
+    # prune image folder
+    image_files = listDirectoryFiles(image_directory)
+    image_length = len(image_files)
+    while image_length > global_vars.IMAGE_MAX_COUNT:
+        deleteResource(getRandomFileInDirectory(image_directory))
+        image_length -= 1
+
+    # prune audio folder
+    audio_files = listDirectoryFiles(audio_directory)
+    audio_length = len(audio_files)
+    while audio_length > global_vars.AUDIO_MAX_COUNT:
+        deleteResource(getRandomFileInDirectory(audio_directory))
+        audio_length -= 1
+        

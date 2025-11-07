@@ -42,13 +42,15 @@ def console_out(message: str, level: LogLevel, newline: bool = True, exit_code: 
         case 1:
             error_prefix += "Unknown:\n"
         case 2:
-            error_prefix += "Missing argument(s)\n"
+            error_prefix += "Missing Argument(s)\n"
         case 3:
             error_prefix += "Incorrect Password\n"
         case 4:
             error_prefix += "Invalid Input\n"
         case 5:
-            error_prefix += "Bad filetype\n"
+            error_prefix += "Bad Filetype\n"
+        case 6:
+            error_prefix += "Bad Path (Dev Fault)\n"
 
     # Format usage_str
     if usage != "":
