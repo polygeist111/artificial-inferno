@@ -13,7 +13,7 @@ from http import HTTPStatus
 
 # Local
 import core.markov
-import core.filehandling
+import core.images
 
 
 poison_ns = Namespace("poison", description="Poisoning operations")
@@ -96,7 +96,7 @@ class PoisonImagesApi(Resource):
         if not image_file.filename:
             poison_ns.abort(400, "No selected file")
 
-        status = core.filehandling.saveImageFromPost(image_file)
+        status = core.images.saveImageFromPost(image_file)
         status_length = len(status)
         if status_length == 1 and status[0] == 0:
             return "Resource added", 201
@@ -115,7 +115,7 @@ class PoisonImagesApi(Resource):
         """
         Return an image and remove it from the buffer
         """
-        image_path = core.filehandling.getImageFromBuffer()
+        image_path = core.images.getImageFromBuffer()
         
         if image_path == "Image not found":
             poison_ns.abort(404, "Image not found")

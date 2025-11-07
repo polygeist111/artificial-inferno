@@ -18,6 +18,10 @@ CORPUS_MAX_COUNT = 10001 # 1 is reserved for seed corpus, others are user-genera
 IMAGE_MAX_COUNT = 5 # TODO: should be 50 for production use
 AUDIO_MAX_COUNT = 5 # TODO: should be 50 for production use
 FILE_DELETION_DELAY = 30 # seconds after serving to delete a file
+# Filepaths
+IMAGE_DIRECTORY = "data/images/"
+AUDIO_DIRECTORY = "data/audio/"
+CORPORA_DIRECTORY = "data/corpora/"
 
 ### Runtime Vars
 #markov_chain: Optional[markovText] = None
