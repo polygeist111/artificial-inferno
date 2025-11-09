@@ -26,7 +26,7 @@ def saveImageFromPost(imageIn: FileStorage):
     new_file_path = f"{image_directory}/image_{write_time}.jpg"
 
     # If image buffer is full, delete a random file
-    directory_has_space = filehandling.validateDirectorySize(image_directory, global_vars.IMAGE_MAX_COUNT, True, True)
+    filehandling.validateDirectorySize(image_directory, global_vars.IMAGE_MAX_COUNT, True, True)
 
     try:
         imageIn.save(new_file_path)
@@ -37,11 +37,11 @@ def saveImageFromPost(imageIn: FileStorage):
         kind = filetype.guess(new_file_path)
         if not (kind and kind.mime == "image/jpeg"):
             filehandling.deleteResource(new_file_path)
-            console_out(f"Uploaded file at {new_file_path} will not be saved: The file is an image, but filetype must be 'image/jpeg', not '{kind.mime if kind else 'an unknown type'}'.", LogLevel.FAILURE)
+            console_out(f"Uploaded file at '{new_file_path}' will not be saved: The file is an image, but filetype must be 'image/jpeg' e.g. JPG, not '{kind.mime if kind else 'an unknown type'}'.", LogLevel.FAILURE)
             return [2] # fail because non jpg image
     else:
         filehandling.deleteResource(new_file_path)
-        console_out(f"Uploaded file at {new_file_path} will not be saved: The file is not an image.", LogLevel.FAILURE)
+        console_out(f"Uploaded file at '{new_file_path}' will not be saved: The file is not an image.", LogLevel.FAILURE)
         return [3] # fail because nonimage file
     
     return [0] # success, jpg image

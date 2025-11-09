@@ -19,10 +19,11 @@ IMAGE_MAX_COUNT = 5 # TODO: should be 50 for production use
 AUDIO_MAX_COUNT = 5 # TODO: should be 50 for production use
 FILE_DELETION_DELAY = 30 # seconds after serving to delete a file
 # Filepaths
-IMAGE_DIRECTORY = "data/images/"
-AUDIO_DIRECTORY = "data/audio/"
-CORPORA_DIRECTORY = "data/corpora/"
+IMAGE_DIRECTORY = "data/buffer/images/"
+AUDIO_DIRECTORY = "data/buffer/audio/"
+CORPORA_DIRECTORY = "data/buffer/corpora/"
 DELIVERY_DIRECTORY = "data/out-for-delivery/"
+INTAKE_DIRECTORY = "Data/intake/"
 
 ### Runtime Vars
 #markov_chain: Optional[markovText] = None

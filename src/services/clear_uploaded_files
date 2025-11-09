@@ -2,9 +2,9 @@
 echo -e "Are you sure you want to delete all non-default uploaded files (corpora, images, audio)? This action cannot be undone.\nType 'Yes, please' to confirm"
 read confirm_code
 if [ "$confirm_code" == "Yes, please" ]; then
-    rm ./src/services/data/corpora/corpus_*
-    rm ./src/services/data/images/image_*
-    rm ./src/services/data/audio/audio_*
+    rm ./src/services/data/buffer/corpora/corpus_*
+    rm ./src/services/data/buffer/images/image_*
+    rm ./src/services/data/buffer/audio/audio_*
 else
     echo "Cancelling operation"
 fi

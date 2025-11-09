@@ -14,6 +14,7 @@ from http import HTTPStatus
 # Local
 import core.markov
 import core.images
+import core.audio
 
 
 poison_ns = Namespace("poison", description="Poisoning operations")
@@ -78,7 +79,7 @@ image_in_parser.add_argument("image",
 @poison_ns.route("/images")
 class PoisonImagesApi(Resource):
     """
-    API for processing poison text data
+    API for processing poison image data
     """
 
     @poison_ns.response(HTTPStatus.OK.value, "Object added")
@@ -123,3 +124,62 @@ class PoisonImagesApi(Resource):
             poison_ns.abort(500, f"Error serving image: bad internal filepath")
             
         return send_file(image_path, as_attachment = True)
+
+
+
+audio_in_parser = poison_ns.parser()
+audio_in_parser.add_argument("audio", 
+                             type = FileStorage, 
+                             location = "files", 
+                             required = True, 
+                             help = "Audio file to upload to poisoner API")
+
+@poison_ns.route("/audio")
+class PoisonAudioApi(Resource):
+    """
+    API for processing poison audio data
+    """
+
+    @poison_ns.response(HTTPStatus.OK.value, "Object added")
+    @poison_ns.expect(audio_in_parser)
+    def post(self):
+        """
+        Adds input audio (not link, actual audio) to the poison buffer
+        NOTE: does not poison audio in the classical sense. 
+        Instead, chunks them out by time sections, shuffles, and reorganizes them
+        """
+        if "audio" not in request.files:
+            poison_ns.abort(400, "No audio file provided")
+
+        audio_file = request.files["audio"]
+
+        if not audio_file.filename:
+            poison_ns.abort(400, "No selected file")
+
+        status = core.audio.saveAudioFromPost(audio_file)
+        status_length = len(status)
+        if status_length == 1 and status[0] == 0:
+            return "Resource added", 201
+        elif status_length == 2 and status[0] == 1:
+            poison_ns.abort(500, f"Error processing audio: {str(status[1])}")
+        elif status_length == 1 and status[0] == 2:
+            poison_ns.abort(400, f"Error processing audio: must be mp3")
+        elif status_length == 1 and status[0] == 3:
+            poison_ns.abort(500, f"Error processing file: must be an audio file (mp3)")
+        else:
+            poison_ns.abort(500, f"Error processing audio: bad function return") # this should never happen
+        
+    
+    # @poison_ns.expect(image_out_parser)
+    def get(self):
+        """
+        Return an audio file and remove it from the buffer
+        """
+        audio_path = core.audio.getAudioFromBuffer()
+        
+        if audio_path == "File not found":
+            poison_ns.abort(404, "Audio not found: server audio buffer is currently empty.")
+        elif audio_path == "Bad path":
+            poison_ns.abort(500, f"Error serving audio: bad internal filepath")
+            
+        return send_file(audio_path, as_attachment = True)

@@ -2,7 +2,7 @@
 echo -e "Are you sure you want to delete all non-default images? This action cannot be undone.\nType 'Yes, please' to confirm"
 read confirm_code
 if [ "$confirm_code" == "Yes, please" ]; then
-    rm ./src/services/data/images/image_*
+    rm ./src/services/data/buffer/images/image_*
 else
     echo "Cancelling operation"
 fi

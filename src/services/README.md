@@ -53,10 +53,18 @@ curl -X POST \
 ```
 ### Sound
 **READ**<br/>
+```
+curl -v --output dev-help/samples-output/requested-audio.mp3 -X GET \
+  127.0.0.1:5000/poison/audio
+```
 **WRITE**<br/>
-
+Must be MPEG (e.g. MP3)
+```
+curl -X POST \
+  -F "audio=@dev-help/samples-input/minecraft_eating_sound_effect_8s.mp3" \
+  127.0.0.1:5000/poison/audio
+```
 
 ## TODO:
-Change download/overflow procedure to move images to a separate serving directory, delete immediately from buffer.
-Separate standard write checks out of image write method
+Ensure consistent format for log messages, use of log levels (specifically, ensure any log message from an internal error e.g. bad hardcoded filepath ends program execution)
 Implement AUDIO api same as images, with the extra shuffling feature
