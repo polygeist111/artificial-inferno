@@ -39,17 +39,24 @@ curl -X POST \
 Images are handled at the /poison/images endpoint
 The service does not perform any operations on images, it only buffers them for more efficient calling by the tarpit. As with text, no information is saved from the upload besides the timestamp of its reception and the file itself. Please only upload JPGs/JPEGs. All returned files will be suffixed .JPG.
 **READ**<br/>
+Note the verbose flag. Since we've specified an output, if this errors (e.g. the server has no images buffered) that text will still be written to the file. By flagging it verbose, we can now see the actual response code to know if it succeeded.
 ```
-curl --output dev-help/samples-output/requested-img.jpg -X GET \
+curl -v --output dev-help/samples-output/requested-img.jpg -X GET \
   127.0.0.1:5000/poison/images
 ```
 **WRITE**<br/>
 Must be JPG/JPEG
 ```
 curl -X POST \
-  -F "image=@dev-help/samples/rhino_owl_mask_gridview.jpeg" \
+  -F "image=@dev-help/samples-input/rhino_owl_mask_gridview.jpeg" \
   127.0.0.1:5000/poison/images
 ```
 ### Sound
 **READ**<br/>
 **WRITE**<br/>
+
+
+## TODO:
+Change download/overflow procedure to move images to a separate serving directory, delete immediately from buffer.
+Separate standard write checks out of image write method
+Implement AUDIO api same as images, with the extra shuffling feature

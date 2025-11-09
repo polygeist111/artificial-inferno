@@ -22,6 +22,7 @@ FILE_DELETION_DELAY = 30 # seconds after serving to delete a file
 IMAGE_DIRECTORY = "data/images/"
 AUDIO_DIRECTORY = "data/audio/"
 CORPORA_DIRECTORY = "data/corpora/"
+DELIVERY_DIRECTORY = "data/out-for-delivery/"
 
 ### Runtime Vars
 #markov_chain: Optional[markovText] = None

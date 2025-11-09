@@ -107,7 +107,7 @@ class PoisonImagesApi(Resource):
         elif status_length == 1 and status[0] == 3:
             poison_ns.abort(500, f"Error processing file: must be image file (jpg)")
         else:
-            poison_ns.abort(500, f"Error processing image (bad function return)") # this should never happen
+            poison_ns.abort(500, f"Error processing image: bad function return") # this should never happen
         
     
     # @poison_ns.expect(image_out_parser)
@@ -117,7 +117,9 @@ class PoisonImagesApi(Resource):
         """
         image_path = core.images.getImageFromBuffer()
         
-        if image_path == "Image not found":
-            poison_ns.abort(404, "Image not found")
+        if image_path == "File not found":
+            poison_ns.abort(404, "Image not found: server image buffer is currently empty.")
+        elif image_path == "Bad path":
+            poison_ns.abort(500, f"Error serving image: bad internal filepath")
             
         return send_file(image_path, as_attachment = True)
