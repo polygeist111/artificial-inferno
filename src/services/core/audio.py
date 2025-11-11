@@ -5,10 +5,13 @@ Module to handle audio-specific actions
 ### Imports
 # Standard
 import time
+import os
 
 # Third Party
 from werkzeug.datastructures import FileStorage
 import filetype
+import pydub # also need to make sure you've installed audioop-lts
+from pydub.utils import make_chunks
 
 # Local
 import global_vars
@@ -25,28 +28,59 @@ def saveAudioFromPost(audioIn: FileStorage):
     write_time = time.time()
     new_file_path = f"{audio_directory}/audio_{write_time}.mp3"
 
-    # If image buffer is full, delete a random file
+    # check for type conformity
+    if filetype.is_audio(audioIn):
+        kind = filetype.guess(audioIn)
+        if not (kind and kind.mime == "audio/mpeg"):
+            console_out(f"Uploaded file '{audioIn.filename}' will not be saved: The file is an audio file, but filetype must be 'image/mpeg' e.g. MP3, not '{kind.mime if kind else 'an unknown type'}'.", LogLevel.FAILURE)
+            return [2] # fail because non mpeg audio
+    else:
+        console_out(f"Uploaded file '{audioIn.filename}' will not be saved: The file is not an audio file.", LogLevel.FAILURE)
+        return [3] # fail because nonaudio file
+    
+    # All below execution is only on correctly-typed files
+    # If audio buffer is full, delete a random file
     filehandling.validateDirectorySize(audio_directory, global_vars.AUDIO_MAX_COUNT, True, True)
 
     try:
         audioIn.save(new_file_path)
     except Exception as e:
-        return [1, e]
-    
-    if filetype.is_audio(new_file_path):
-        kind = filetype.guess(new_file_path)
-        if not (kind and kind.mime == "audio/mpeg"):
-            filehandling.deleteResource(new_file_path)
-            console_out(f"Uploaded file at '{new_file_path}' will not be saved: The file is an audio file, but filetype must be 'image/mpeg' e.g. MP3, not '{kind.mime if kind else 'an unknown type'}'.", LogLevel.FAILURE)
-            return [2] # fail because non mpeg audio
-    else:
-        filehandling.deleteResource(new_file_path)
-        console_out(f"Uploaded file at '{new_file_path}' will not be saved: The file is not an audio file.", LogLevel.FAILURE)
-        return [3] # fail because nonaudio file
-    
+        return [1, e] # fail because unknown internal error
+    subdivideAudio(new_file_path, 1000)
     return [0] # success, mpeg audio
     
 
 
 def getAudioFromBuffer():
+    """
+    Processes audio file from buffer to serve back to API
+    """
     return filehandling.serveRandomFileFromBuffer(global_vars.AUDIO_DIRECTORY)
+
+
+
+def subdivideAudio(audio_file_path: str, chunk_length_ms: int) -> bool:
+    """
+    Break an audio file (MP3) down into shorter subsections
+    Takes the source filepath and subsection length in ms
+    """
+    # check path validity
+    if not os.path.exists(audio_file_path):
+        console_out(f"Cannot subdivide audio file '{audio_file_path}' because path is invalid", LogLevel.FAILURE)
+        return False
+    file_basename = os.path.basename(audio_file_path)
+    
+    # load into audio object
+    audio = pydub.AudioSegment.from_file(audio_file_path, format = "mp3")
+
+    chunks = make_chunks(audio, chunk_length_ms)
+
+    # save the chunks as distinct files
+    for i, chunk in enumerate(chunks):
+        # Name each chunk file sequentially
+        chunk_name = os.path.join(global_vars.AUDIO_DIRECTORY, f"{file_basename}_chunk_{i}.mp3")
+        try:
+            chunk.export(chunk_name, format="mp3")
+        except Exception as e:
+            console_out(f"Could not save chunk '{chunk_name}' due to uncaught exception: {e}", LogLevel.WARN)
+    return True

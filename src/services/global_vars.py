@@ -29,6 +29,8 @@ INTAKE_DIRECTORY = "Data/intake/"
 #markov_chain: Optional[markovText] = None
 markov_chain: markovText
 corpus_count: int = 0
+image_count: int = 0
+audio_count: int = 0
 
 # Colors
 class Colors(Enum):

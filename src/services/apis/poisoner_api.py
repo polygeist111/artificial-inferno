@@ -38,9 +38,15 @@ class PoisonTextApi(Resource):
     @poison_ns.response(HTTPStatus.OK.value, "Object added")
     @poison_ns.expect(text_in_parser)
     def post(self):
-        """
+        r"""
         Add input string to the corpus buffer and active markov chain
         Pass input as a string named "content"
+
+        Example usage:
+        curl -X POST \                        
+            -H "Content-Type: application/json" \
+            -d '{"content": "This is an example sentence to be uploaded to the markov chain."}' \
+            127.0.0.1:5000/poison/text
         """
         args = text_in_parser.parse_args()
         # Add to the model.
@@ -49,11 +55,17 @@ class PoisonTextApi(Resource):
     
     @poison_ns.expect(text_out_parser)
     def get(self):
-        """
+        r"""
         Return a generated string of X (1 <= X <= 100, default 3) sentences from the markov chain
         Pass number of sentences as an int named "numsentences"
         If generating numsentences fails, it will try to fall back to 3 sentences. 
         If that also fails, it will return an error string.
+
+        Example usage:
+        curl -X GET \
+            -H "Content-Type: application/json" \
+            -d '{"numsentences": 5}' \
+            127.0.0.1:5000/poison/text
         """
         args = text_out_parser.parse_args()
         numsentences = args["numsentences"] or 3
@@ -85,9 +97,14 @@ class PoisonImagesApi(Resource):
     @poison_ns.response(HTTPStatus.OK.value, "Object added")
     @poison_ns.expect(image_in_parser)
     def post(self):
-        """
+        r"""
         Adds input image (not link, actual image) to the poison buffer
         NOTE: does not poison images. Assumes they have been tampered with ahead of time.
+
+        Example usage:
+        curl -X POST \
+            -F "image=@dev-help/samples-input/rhino_owl_mask_gridview.jpeg" \
+            127.0.0.1:5000/poison/images
         """
         if "image" not in request.files:
             poison_ns.abort(400, "No image file provided")
@@ -113,8 +130,12 @@ class PoisonImagesApi(Resource):
     
     # @poison_ns.expect(image_out_parser)
     def get(self):
-        """
+        r"""
         Return an image and remove it from the buffer
+
+        Example usage:
+        curl -v --output dev-help/samples-output/requested-img.jpg -X GET \
+            127.0.0.1:5000/poison/images
         """
         image_path = core.images.getImageFromBuffer()
         
@@ -143,10 +164,15 @@ class PoisonAudioApi(Resource):
     @poison_ns.response(HTTPStatus.OK.value, "Object added")
     @poison_ns.expect(audio_in_parser)
     def post(self):
-        """
+        r"""
         Adds input audio (not link, actual audio) to the poison buffer
         NOTE: does not poison audio in the classical sense. 
         Instead, chunks them out by time sections, shuffles, and reorganizes them
+
+        Example usage:
+        curl -X POST \
+            -F "audio=@dev-help/samples-input/rhino_owl_mask_gridview.jpeg" \
+            127.0.0.1:5000/poison/audio
         """
         if "audio" not in request.files:
             poison_ns.abort(400, "No audio file provided")
@@ -172,8 +198,12 @@ class PoisonAudioApi(Resource):
     
     # @poison_ns.expect(image_out_parser)
     def get(self):
-        """
+        r"""
         Return an audio file and remove it from the buffer
+
+        Example usage:
+        curl -v --output dev-help/samples-output/requested-audio.mp3 -X GET \
+            127.0.0.1:5000/poison/audio
         """
         audio_path = core.audio.getAudioFromBuffer()
         
