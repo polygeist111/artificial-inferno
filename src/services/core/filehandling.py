@@ -26,8 +26,8 @@ def deleteResource(filepath: str) -> bool:
     """
     if os.path.exists(filepath):
         os.remove(filepath)
-        directory_name = os.path.split(filepath)[0]
-        incrementBufferDirectoryCountByPath(directory_name, True, True)
+        directory_name = f"{os.path.split(filepath)[0]}/"
+        incrementBufferDirectoryCountByPath(directory_name, True)
         console_out(f"File '{filepath}' successfully deleted.", LogLevel.SUCCESS)
         return True
     console_out(f"File '{filepath}' cannot be deleted, does not exist", LogLevel.FAILURE)
@@ -89,12 +89,12 @@ def initializeFileBuffers():
     """
 
     # Empty the ephemeral directories
-    trimDirectory(global_vars.DELIVERY_DIRECTORY, 0)
-    trimDirectory(global_vars.INTAKE_DIRECTORY, 0)
+    global_vars.delivery_count = trimDirectory(global_vars.DELIVERY_DIRECTORY, 0)
+    global_vars.intake_count = trimDirectory(global_vars.INTAKE_DIRECTORY, 0)
     # trim buffers to max size
-    trimDirectory(global_vars.AUDIO_DIRECTORY, global_vars.AUDIO_MAX_COUNT)
-    trimDirectory(global_vars.CORPORA_DIRECTORY, global_vars.CORPUS_MAX_COUNT)
-    trimDirectory(global_vars.IMAGE_DIRECTORY, global_vars.IMAGE_MAX_COUNT)
+    global_vars.audio_count = trimDirectory(global_vars.AUDIO_DIRECTORY, global_vars.AUDIO_MAX_COUNT)
+    global_vars.corpus_count = trimDirectory(global_vars.CORPORA_DIRECTORY, global_vars.CORPUS_MAX_COUNT)
+    global_vars.image_count = trimDirectory(global_vars.IMAGE_DIRECTORY, global_vars.IMAGE_MAX_COUNT)
 
 
 
@@ -162,10 +162,11 @@ def serveRandomFileFromBuffer(target_directory: str) -> str:
 
 
 
-def addFileToBufferDirectory(target_directory: str, new_file_basename: str, file: object):
+def addFileToBufferDirectory(target_directory: str, new_file_basename: str, file: object) -> str:
     """
     Multi-type function to save a given file object to buffer
     Takes directory, new basename, and the file object (FileStorage or AudioSegment)
+    Returns new file path
     """
     # validate directory existance
     if not os.path.exists(target_directory):
@@ -178,16 +179,23 @@ def addFileToBufferDirectory(target_directory: str, new_file_basename: str, file
     try:
         match file:
             case FileStorage():
+                if dir_is_oversized:
+                    deleteResource(getRandomFileInDirectory(target_directory))
                 file.save(new_file_name)
+                console_out(f"File saved as '{new_file_name}'", LogLevel.SUCCESS)
             case AudioSegment():
+                if dir_is_oversized:
+                    deleteResource(getRandomFileInDirectory(target_directory))
                 file.export(new_file_name, format = "mp3")
+                console_out(f"File saved as '{new_file_name}'", LogLevel.SUCCESS)
             case _:
                 console_out(f"File cannot be saved to buffer, is not an accepted type (FileStorage | pydub.AudioSegment).", LogLevel.ERROR, exit_code = 5)       
-        if dir_is_oversized:
-            deleteResource(getRandomFileInDirectory(target_directory))
     except Exception as e:
         console_out(f"Could not save file '{new_file_name}', an unexpected error occured: {e}.", LogLevel.WARN)
         incrementBufferDirectoryCountByPath(target_directory, True)
+        return "Failed to save file"
+    
+    return new_file_name
 
 
 
@@ -202,13 +210,19 @@ def incrementBufferDirectoryCountByPath(target_directory: str, decrement: bool =
     match target_directory:
         case global_vars.AUDIO_DIRECTORY:
             global_vars.audio_count += adjustment
-            return (global_vars.audio_count, global_vars.audio_count < global_vars.AUDIO_MAX_COUNT)
+            return (global_vars.audio_count, global_vars.audio_count > global_vars.AUDIO_MAX_COUNT)
         case global_vars.CORPORA_DIRECTORY:
             global_vars.corpus_count += adjustment
-            return (global_vars.corpus_count, global_vars.corpus_count < global_vars.CORPUS_MAX_COUNT)
+            return (global_vars.corpus_count, global_vars.corpus_count > global_vars.CORPUS_MAX_COUNT)
         case global_vars.IMAGE_DIRECTORY:
             global_vars.image_count += adjustment
-            return (global_vars.image_count, global_vars.image_count < global_vars.IMAGE_MAX_COUNT)
+            return (global_vars.image_count, global_vars.image_count > global_vars.IMAGE_MAX_COUNT)
+        case global_vars.INTAKE_DIRECTORY:
+            global_vars.intake_count += adjustment
+            return (global_vars.intake_count, global_vars.intake_count > global_vars.INTAKE_MAX_COUNT)
+        case global_vars.DELIVERY_DIRECTORY:
+            global_vars.delivery_count += adjustment
+            return (global_vars.delivery_count, global_vars.delivery_count > global_vars.DELIVERY_MAX_COUNT)
         case _:
             if not unsafe:
                 console_out(f"Target dirctory '{target_directory}' cannot be saved to, is not a buffer dir or does not exist", LogLevel.ERROR, exit_code = 6)
@@ -216,13 +230,20 @@ def incrementBufferDirectoryCountByPath(target_directory: str, decrement: bool =
         
 
 
-def trimDirectory(target_directory: str, directory_file_max_count: int):
+def trimDirectory(target_directory: str, directory_file_max_count: int) -> int:
     """
     Deletes files in a directory until it is at the specified max count
+    Returns the number of files left after trim
     """
+    print(f"trimming directory {target_directory}")
     files = listDirectoryFiles(target_directory)
 
     while len(files) > directory_file_max_count:
         file_to_delete = random.choice(files)
-        deleteResource(file_to_delete)
+        deleteResource(os.path.join(target_directory, file_to_delete))
         files.remove(file_to_delete)
+
+    if files: 
+        return len(files)
+    else:
+        return 0

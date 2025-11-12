@@ -24,9 +24,8 @@ def saveAudioFromPost(audioIn: FileStorage):
     """
     Validates and saves audio POSTed to the API
     """
-    audio_directory = global_vars.AUDIO_DIRECTORY
     write_time = time.time()
-    new_file_path = f"{audio_directory}/audio_{write_time}.mp3"
+    new_file_basename = f"audio_{write_time}.mp3"
 
     # check for type conformity
     if filetype.is_audio(audioIn):
@@ -39,15 +38,12 @@ def saveAudioFromPost(audioIn: FileStorage):
         return [3] # fail because nonaudio file
     
     # All below execution is only on correctly-typed files
-    # If audio buffer is full, delete a random file
-    filehandling.validateDirectorySize(audio_directory, global_vars.AUDIO_MAX_COUNT, True, True)
-
-    try:
-        audioIn.save(new_file_path)
-    except Exception as e:
-        return [1, e] # fail because unknown internal error
-    subdivideAudio(new_file_path, 1000)
-    return [0] # success, mpeg audio
+    new_file_path = filehandling.addFileToBufferDirectory(global_vars.INTAKE_DIRECTORY, new_file_basename, audioIn)
+    if new_file_path != "Failed to save file":
+        subdivideAudio(new_file_path, 1000)
+        return [0] # success, mpeg audio
+    
+    return [1] # fail on internal error
     
 
 
@@ -74,13 +70,13 @@ def subdivideAudio(audio_file_path: str, chunk_length_ms: int) -> bool:
     audio = pydub.AudioSegment.from_file(audio_file_path, format = "mp3")
 
     chunks = make_chunks(audio, chunk_length_ms)
-
     # save the chunks as distinct files
     for i, chunk in enumerate(chunks):
-        # Name each chunk file sequentially
-        chunk_name = os.path.join(global_vars.AUDIO_DIRECTORY, f"{file_basename}_chunk_{i}.mp3")
-        try:
-            chunk.export(chunk_name, format="mp3")
-        except Exception as e:
-            console_out(f"Could not save chunk '{chunk_name}' due to uncaught exception: {e}", LogLevel.WARN)
+        # Name each chunk file sequentially (-4 removes .mp3 from file basename)
+        chunk_name = f"{file_basename[:-4]}_chunk_{i}.mp3"
+        filehandling.addFileToBufferDirectory(global_vars.AUDIO_DIRECTORY, chunk_name, chunk)
+    
+    # remove intake file
+    filehandling.deleteResource(audio_file_path)
+
     return True

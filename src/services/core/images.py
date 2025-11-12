@@ -5,6 +5,7 @@ Module to handle image-specific actions
 ### Imports
 # Standard
 import time
+import os
 
 # Third Party
 from werkzeug.datastructures import FileStorage
@@ -23,7 +24,7 @@ def saveImageFromPost(imageIn: FileStorage):
     """
     image_directory = global_vars.IMAGE_DIRECTORY
     write_time = time.time()
-    new_file_path = f"{image_directory}/image_{write_time}.jpg"
+    new_file_path = os.path.join(image_directory, f"image_{write_time}.jpg")
 
     # check for type conformity
     if filetype.is_image(imageIn):

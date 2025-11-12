@@ -15,7 +15,7 @@ import global_vars
 import core.messaging as messaging
 
 
-corpus_directory = "data/corpora/" # path is resolved relative to app.py, not markov.py
+corpus_directory = global_vars.CORPORA_DIRECTORY # path is resolved relative to app.py, not markov.py
 
 # called from app.py on server start only
 def initMarkovGenerator():

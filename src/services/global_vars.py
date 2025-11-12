@@ -14,16 +14,18 @@ from markovify import Text as markovText
 
 
 ### Configurable Constants
-CORPUS_MAX_COUNT = 10001 # 1 is reserved for seed corpus, others are user-generated
-IMAGE_MAX_COUNT = 5 # TODO: should be 50 for production use
-AUDIO_MAX_COUNT = 5 # TODO: should be 50 for production use
-FILE_DELETION_DELAY = 30 # seconds after serving to delete a file
+CORPUS_MAX_COUNT: int = 10001 # 1 is reserved for seed corpus, others are user-generated
+IMAGE_MAX_COUNT: int = 5 # TODO: should be 50 for production use
+AUDIO_MAX_COUNT: int = 5 # TODO: should be 50 for production use
+INTAKE_MAX_COUNT: int = 5
+DELIVERY_MAX_COUNT: int = 5
+FILE_DELETION_DELAY: int = 30 # seconds after serving to delete a file
 # Filepaths
-IMAGE_DIRECTORY = "data/buffer/images/"
-AUDIO_DIRECTORY = "data/buffer/audio/"
-CORPORA_DIRECTORY = "data/buffer/corpora/"
-DELIVERY_DIRECTORY = "data/out-for-delivery/"
-INTAKE_DIRECTORY = "Data/intake/"
+IMAGE_DIRECTORY: str = "data/buffer/images/"
+AUDIO_DIRECTORY: str = "data/buffer/audio/"
+CORPORA_DIRECTORY: str = "data/buffer/corpora/"
+DELIVERY_DIRECTORY: str = "data/out-for-delivery/"
+INTAKE_DIRECTORY: str = "data/intake/"
 
 ### Runtime Vars
 #markov_chain: Optional[markovText] = None
@@ -31,6 +33,8 @@ markov_chain: markovText
 corpus_count: int = 0
 image_count: int = 0
 audio_count: int = 0
+intake_count: int = 0
+delivery_count: int = 0
 
 # Colors
 class Colors(Enum):
