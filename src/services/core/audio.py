@@ -6,6 +6,7 @@ Module to handle audio-specific actions
 # Standard
 import time
 import os
+import random
 
 # Third Party
 from werkzeug.datastructures import FileStorage
@@ -47,11 +48,41 @@ def saveAudioFromPost(audioIn: FileStorage):
     
 
 
-def getAudioFromBuffer():
+def getAudioFromBuffer(clip_duration: int):
     """
     Processes audio file from buffer to serve back to API
     """
-    return filehandling.serveRandomFileFromBuffer(global_vars.AUDIO_DIRECTORY)
+    # get current buffer contents and lower clip_duration if buffer size is less than intended duration
+    audio_buffer = filehandling.listDirectoryFiles(global_vars.AUDIO_DIRECTORY)
+    audio_buffer_size = len(audio_buffer)
+    if clip_duration > audio_buffer_size:
+        clip_duration = audio_buffer_size
+
+    # assemble output file
+    output_file: pydub.AudioSegment = None # type: ignore
+    while clip_duration > 0:
+        # select random file in buffer and load into audiosegment
+        selected_basename = random.choice(audio_buffer)
+        selected_file = os.path.join(global_vars.AUDIO_DIRECTORY, selected_basename)
+        working_segment = pydub.AudioSegment.from_file(selected_file)
+        
+        # remove selection from options, as well as buffer
+        audio_buffer.remove(selected_basename)
+        filehandling.deleteResource(selected_file)
+        clip_duration -= 1
+
+        # add new segment to the output segment
+        if output_file is None:
+            output_file = working_segment
+        else:
+            output_file += working_segment
+
+    # save output audiosegment to file
+    new_filename = f"audio_clip_{time.time()}.mp3"
+    filehandling.addFileToBufferDirectory(global_vars.INTAKE_DIRECTORY, new_filename, output_file)
+
+    # serve the new segment back to the requester
+    return filehandling.serveFile(os.path.join(global_vars.INTAKE_DIRECTORY, new_filename))
 
 
 

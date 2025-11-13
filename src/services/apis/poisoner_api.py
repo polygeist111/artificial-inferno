@@ -4,6 +4,7 @@ API definition for poisoner functions
 
 ### Imports
 # Standard
+import random
 
 # Third Party
 from flask import request, send_file
@@ -57,7 +58,7 @@ class PoisonTextApi(Resource):
     def get(self):
         r"""
         Return a generated string of X (1 <= X <= 100, default 3) sentences from the markov chain
-        Pass number of sentences as an int named "numsentences"
+        Pass number of sentences in JSON as an int named "numsentences"
         If generating numsentences fails, it will try to fall back to 3 sentences. 
         If that also fails, it will return an error string.
 
@@ -75,7 +76,7 @@ class PoisonTextApi(Resource):
         output = core.markov.getXSentences(numsentences)
         # If it fails on user number, falls back to three sentences
         # If that also fails, will return the error message
-        if output[:5] == "ERORR":
+        if output[:5] == "ERROR":
             output = core.markov.getXSentences(3)
         return output
 
@@ -154,6 +155,9 @@ audio_in_parser.add_argument("audio",
                              location = "files", 
                              required = True, 
                              help = "Audio file to upload to poisoner API")
+audio_out_parser = poison_ns.parser()
+audio_out_parser.add_argument("clip_duration", 
+                             type=int)
 
 @poison_ns.route("/audio")
 class PoisonAudioApi(Resource):
@@ -199,13 +203,23 @@ class PoisonAudioApi(Resource):
     # @poison_ns.expect(image_out_parser)
     def get(self):
         r"""
-        Return an audio file and remove it from the buffer
+        Return a stitched audio clip of X (1 <= X <= 100, default 3) seconds from the audio buffer
+        Pass number of seconds of audio in JSON as an int named "clip_duration"
+        If returning clip_duration seconds of audio fails, it will return a shorter clip of the max possible size in the buffer. 
+        If that also fails, it will return an error string.
 
         Example usage:
         curl -v --output dev-help/samples-output/requested-audio.mp3 -X GET \
+            -H "Content-Type: application/json" \
+            -d '{"clip_duration": 5}' \
             127.0.0.1:5000/poison/audio
         """
-        audio_path = core.audio.getAudioFromBuffer()
+        args = audio_out_parser.parse_args()
+        clip_duration = args["clip_duration"] or random.choice(range(3, 11))
+        if clip_duration < 1: clip_duration = 1
+        if clip_duration > 100: clip_duration = 100
+
+        audio_path = core.audio.getAudioFromBuffer(clip_duration)
         
         if audio_path == "File not found":
             poison_ns.abort(404, "Audio not found: server audio buffer is currently empty.")

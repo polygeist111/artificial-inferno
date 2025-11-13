@@ -57,6 +57,12 @@ curl -X POST \
 curl -v --output dev-help/samples-output/requested-audio.mp3 -X GET \
   127.0.0.1:5000/poison/audio
 ```
+```
+curl -v --output dev-help/samples-output/requested-audio.mp3 -X GET \
+  -H "Content-Type: application/json" \
+  -d '{"clip_duration": 5}' \
+  127.0.0.1:5000/poison/audio
+```
 **WRITE**<br/>
 Must be MPEG (e.g. MP3)
 ```
@@ -67,4 +73,3 @@ curl -X POST \
 
 ## TODO:
 Ensure consistent format for log messages, use of log levels (specifically, ensure any log message from an internal error e.g. bad hardcoded filepath ends program execution)
-Implement AUDIO api same as images, with the extra shuffling feature

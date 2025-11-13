@@ -6,7 +6,5 @@
 - `out-for-delivery`: Waiting area for files served to clients. All files here are earmarked for timed deletion when entered<br/>
 
 ## TODO
-- Build proper audio GET function to stitch clips together
 - Restructure file globals as dictionary, update functions to match
 - Implement buffer safety for intake and delivery
-- Deprecate validateDirectorySize

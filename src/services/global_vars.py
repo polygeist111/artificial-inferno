@@ -16,9 +16,9 @@ from markovify import Text as markovText
 ### Configurable Constants
 CORPUS_MAX_COUNT: int = 10001 # 1 is reserved for seed corpus, others are user-generated
 IMAGE_MAX_COUNT: int = 5 # TODO: should be 50 for production use
-AUDIO_MAX_COUNT: int = 5 # TODO: should be 50 for production use
-INTAKE_MAX_COUNT: int = 5
-DELIVERY_MAX_COUNT: int = 5
+AUDIO_MAX_COUNT: int = 30 # TODO: should be 50 for production use
+INTAKE_MAX_COUNT: int = 10
+DELIVERY_MAX_COUNT: int = 10
 FILE_DELETION_DELAY: int = 30 # seconds after serving to delete a file
 # Filepaths
 IMAGE_DIRECTORY: str = "data/buffer/images/"
