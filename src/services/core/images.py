@@ -22,9 +22,8 @@ def saveImageFromPost(imageIn: FileStorage):
     """
     Validates and saves image POSTed to the API
     """
-    image_directory = global_vars.IMAGE_DIRECTORY
     write_time = time.time()
-    new_file_path = os.path.join(image_directory, f"image_{write_time}.jpg")
+    new_file_basename = f"image_{write_time}.jpg"
 
     # check for type conformity
     if filetype.is_image(imageIn):
@@ -37,13 +36,9 @@ def saveImageFromPost(imageIn: FileStorage):
         return [3] # fail because nonimage file
     
     # All below execution is only on correctly-typed files
-    # If image buffer is full, delete a random file
-    filehandling.validateDirectorySize(image_directory, global_vars.IMAGE_MAX_COUNT, True, True)
-
-    try:
-        imageIn.save(new_file_path)
-    except Exception as e:
-        return [1, e] # fail because unknown internal error
+    new_file_path = filehandling.addFileToBufferDirectory(global_vars.IMAGE_DIRECTORY, new_file_basename, imageIn)
+    if new_file_path[:len("Exception: ")] == "Exception: ":
+        return [1, new_file_path[len("Exception: "):]] # fail on internal error
     
     return [0] # success, jpg image
     

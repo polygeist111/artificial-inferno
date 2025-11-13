@@ -35,27 +35,6 @@ def deleteResource(filepath: str) -> bool:
 
 
 
-def validateDirectorySize(directory_path: str, max_size: int, adding: bool = False, trim: bool = False) -> bool:
-    """
-    Checks if a given directory contains fewer than the stated maximum number of files
-    If Adding is true, calculates size relative to addition op (i.e. actual size + 1)
-    If Trim is true AND adding is true, the function will randomly drop a file from the directory if it's currently full
-    """
-    files_in_dir = listDirectoryFiles(directory_path)
-    new_dir_size = len(files_in_dir)
-    if adding:
-        new_dir_size += 1
-
-    if new_dir_size <= max_size:
-        return True
-    else:
-        if trim:
-            console_out(f"Directory '{directory_path}' is full, and a file is to be added. Deleting one random file in the directory to make space.", LogLevel.INFO)
-            deleteResource(getRandomFileInDirectory(directory_path))
-        return False
-
-
-
 def listDirectoryFiles(directory_path: str) -> list[str]:
     """
     Lists all files (only files) in a given directory
@@ -193,7 +172,7 @@ def addFileToBufferDirectory(target_directory: str, new_file_basename: str, file
     except Exception as e:
         console_out(f"Could not save file '{new_file_name}', an unexpected error occured: {e}.", LogLevel.WARN)
         incrementBufferDirectoryCountByPath(target_directory, True)
-        return "Failed to save file"
+        return f"Exception: {e}"
     
     return new_file_name
 

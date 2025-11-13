@@ -39,11 +39,11 @@ def saveAudioFromPost(audioIn: FileStorage):
     
     # All below execution is only on correctly-typed files
     new_file_path = filehandling.addFileToBufferDirectory(global_vars.INTAKE_DIRECTORY, new_file_basename, audioIn)
-    if new_file_path != "Failed to save file":
+    if new_file_path[:len("Exception: ")] != "Exception: ":
         subdivideAudio(new_file_path, 1000)
         return [0] # success, mpeg audio
     
-    return [1] # fail on internal error
+    return [1, new_file_path[len("Exception: "):]] # fail on internal error
     
 
 
