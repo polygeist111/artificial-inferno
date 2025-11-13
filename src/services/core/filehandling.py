@@ -38,12 +38,20 @@ def deleteResource(filepath: str) -> bool:
 def listDirectoryFiles(directory_path: str) -> list[str]:
     """
     Lists all files (only files) in a given directory
+    NOTE: does NOT list .gitkeep files
     """
     filenames: list[str] = []
     if os.path.exists(directory_path):
         filenames = [entry for entry in os.listdir(directory_path) if os.path.isfile(os.path.join(directory_path, entry))]
     else:
         console_out(f"Filepath {directory_path} cannot be counted, does not exist", LogLevel.ERROR, exit_code = 6)
+
+    # remove gitkeeps from all returns
+    try:
+        filenames.remove(".gitkeep")
+    except:
+        pass
+
     return filenames
 
 
