@@ -123,7 +123,7 @@ class PoisonImagesApi(Resource):
         elif status_length == 1 and status[0] == 2:
             poison_ns.abort(400, f"Error processing image: must be jpg")
         elif status_length == 1 and status[0] == 3:
-            poison_ns.abort(500, f"Error processing file: must be image file (jpg)")
+            poison_ns.abort(400, f"Error processing file: must be image file (jpg)")
         else:
             poison_ns.abort(500, f"Error processing image: bad function return") # this should never happen
         
@@ -191,7 +191,7 @@ class PoisonAudioApi(Resource):
         elif status_length == 1 and status[0] == 2:
             poison_ns.abort(400, f"Error processing audio: must be mp3")
         elif status_length == 1 and status[0] == 3:
-            poison_ns.abort(500, f"Error processing file: must be an audio file (mp3)")
+            poison_ns.abort(400, f"Error processing file: must be an audio file (mp3)")
         else:
             poison_ns.abort(500, f"Error processing audio: bad function return") # this should never happen
         

@@ -222,8 +222,9 @@ def trimDirectory(target_directory: str, directory_file_max_count: int) -> int:
     Deletes files in a directory until it is at the specified max count
     Returns the number of files left after trim
     """
-    print(f"trimming directory {target_directory}")
+    console_out(f"Trimming directory {target_directory}.", LogLevel.INFO)
     files = listDirectoryFiles(target_directory)
+    print(files)
 
     while len(files) > directory_file_max_count:
         file_to_delete = random.choice(files)
