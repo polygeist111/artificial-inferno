@@ -5,12 +5,12 @@ API definition for poisoner functions
 ### Imports
 # Standard
 import random
+from http import HTTPStatus
 
 # Third Party
 from flask import request, send_file
 from flask_restx import Namespace, Resource
 from werkzeug.datastructures import FileStorage
-from http import HTTPStatus
 
 # Local
 import core.markov

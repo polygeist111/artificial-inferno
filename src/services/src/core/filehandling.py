@@ -5,13 +5,11 @@ Module to handle all general file handling actions
 ### Imports
 # Standard
 import os
-import time
 import threading
 import random
 
 # Third Party
 from werkzeug.datastructures import FileStorage
-import filetype
 from pydub import AudioSegment
 
 #Local

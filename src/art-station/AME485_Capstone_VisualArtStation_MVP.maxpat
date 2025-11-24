@@ -244,7 +244,6 @@
 						"classnamespace" : "box",
 						"rect" : [ 42.0, 95.0, 768.0, 837.0 ],
 						"gridsize" : [ 15.0, 15.0 ],
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-221",
@@ -474,7 +473,7 @@
 									"outlettype" : [ "" ],
 									"parseobj" : 1,
 									"patching_rect" : [ 938.888933658599854, 1744.444527626037598, 573.188410580158234, 35.0 ],
-									"text" : "\"Documents/Personal Programming/artificial-inferno/src/art-station/out-for-delivery/1763073314022269000.jpg\""
+									"text" : "\"Documents/Personal Programming/artificial-inferno/src/art-station/out-for-delivery/1763167981270033000.jpg\""
 								}
 
 							}
@@ -669,7 +668,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 750.000035762786865, 1365.277842879295349, 473.043462753295898, 49.0 ],
-									"text" : "\"Macintosh HD:/Users/thalia/Documents/Personal Programming/artificial-inferno/src/art-station/out-for-delivery/1763073314022269000.jpg\""
+									"text" : "\"Macintosh HD:/Users/thalia/Documents/Personal Programming/artificial-inferno/src/art-station/out-for-delivery/1763167981270033000.jpg\""
 								}
 
 							}
@@ -740,7 +739,7 @@
 									"outlettype" : [ "" ],
 									"parseobj" : 1,
 									"patching_rect" : [ 635.0, 844.0, 449.473700284957886, 52.0 ],
-									"text" : "\"Macintosh HD:/Users/thalia/Documents/Personal Programming/artificial-inferno/src/art-station/out-for-delivery/1763073314022269000.jpg\""
+									"text" : "\"Macintosh HD:/Users/thalia/Documents/Personal Programming/artificial-inferno/src/art-station/out-for-delivery/1763167981270033000.jpg\""
 								}
 
 							}
@@ -780,7 +779,7 @@
 									"data" : 									{
 										"part1" : 										{
 											"name" : "image",
-											"file" : "Macintosh HD:/Users/thalia/Documents/Personal Programming/artificial-inferno/src/art-station/out-for-delivery/1763073314022269000.jpg"
+											"file" : "Macintosh HD:/Users/thalia/Documents/Personal Programming/artificial-inferno/src/art-station/out-for-delivery/1763167981270033000.jpg"
 										}
 
 									}
@@ -1671,7 +1670,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 2063.428663671016693, 1896.000084757804871, 50.0, 35.0 ],
-					"text" : "343 363"
+					"text" : "1014 761"
 				}
 
 			}
@@ -2235,7 +2234,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1390.350863933563232, 1859.154953956604004, 225.438594341278076, 22.0 ],
-					"text" : "1. 0.272242 0.065629 1."
+					"text" : "0.196902 1. 0.323333 1."
 				}
 
 			}
@@ -3469,7 +3468,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 659.756113290786743, 1009.756121635437012, 1135.869543552398682, 22.0 ],
-									"text" : "https://pixabay.com/get/g50ac496a767339527b5e9dd4d7524869f03c733959d90084ee91f53788fddb8583dc542eef4b289c297a342f12c2b6183ce2581bfde2f13c67966c22fbf2b88d_1280.png"
+									"text" : "https://pixabay.com/get/gb7a607a74ca09a3fcda99d6e4a82548ce61d4da8dc10e9f580a5c70bb50d0734e13721a31170fad4159cc6de02d6e50a8359072387470ff66713cbcc984a0891_1280.png"
 								}
 
 							}
