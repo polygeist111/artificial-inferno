@@ -1,0 +1,172 @@
+#!/bin/bash
+
+# README
+#   This script is not itself the bot. It is named such for clarity of CLI interactions
+#   The purpose of this script is to write commands into a file read by the lifespan manager,
+#   thus allowing hot reloading of whatever python script defines the bot living in this container
+#
+#   note also that the verbose flag is not actually for this script, it is passed on to the lifespan script
+
+# this script takes one or two arguments
+
+#############################
+
+BLACK='\033[30m'
+RED='\033[31m'
+GREEN='\033[32m'
+YELLOW='\033[33m'
+BLUE='\033[34m'
+MAGENTA='\033[35m'
+CYAN='\033[36m'
+WHITE='\033[37m'
+RESET='\033[0m'
+
+LRED='\033[91m'
+LGREEN='\033[92m'
+
+#############################
+
+# Global Flags
+Bot_PID=2 # not populated in this script as of 9/18/2025
+Bot_File="$BOT_FILE_NAME"
+Flag_File="$FLAG_FILE_NAME"
+Log_File="$LOG_FILE_NAME"
+
+#############################
+
+main() {
+    echo -e "${WHITE}--------------------${RESET}"
+    if [ $# -lt 1 ]; then
+        echo -e "${RED}ERROR: $0 call missing command${RESET}"
+        explain_usage
+    fi
+
+    verbose=1
+    command="$1"
+    # normalize to uppercase
+    command=${command^^}
+    shift
+
+    while getopts "v" flag; do
+        case "$flag" in
+            v)
+                verbose=0
+                ;;
+            \?)
+                echo -e "${RED}ERROR: Bad flag passed in${RESET}"
+                explain_usage
+                ;;
+            *)
+                echo -e "${RED}ERROR: Badder flag passed in${RESET}"
+                explain_usage
+                ;;
+        esac
+    done
+        
+    case "$command" in
+    # exit lifespan, stop container
+        "EXIT")
+            write_command_file "EXIT" $verbose
+            ;;
+
+        # stops and restarts the bot script
+        "RESTART")
+            write_command_file "RESTART" $verbose
+            ;;
+        
+        # stops the bot script
+        "STOP")
+            write_command_file "STOP" $verbose
+            ;;
+        
+        # starts the bot script
+        "START")
+            write_command_file "START" $verbose
+            ;;
+
+        # returns current bot status
+        "STATUS")
+            write_command_file "STATUS" $verbose
+            ;;
+        
+        # dumps full log file
+        "LOGDUMP")
+            dump_combined_log
+            ;;
+
+        # catches bad commands
+        *)
+            echo -e "${RED}ERROR: Bad command ($command)${RESET}"
+            explain_usage
+            ;;
+    esac
+    echo -e "${WHITE}--------------------${RESET}"
+}
+
+#############################
+
+explain_usage() {
+    echo -e "${MAGENTA}"
+
+    echo -e "Usage: $0 <Command> [Options]"
+
+    echo -e ""
+    echo -e "Commands (case insensetive):"
+    echo -e " EXIT        Stop bot and container"
+    echo -e " RESTART     Stop and restart bot"
+    echo -e " STOP        Stop bot if running"
+    echo -e " START       Start bot if not running"
+    echo -e " STATUS      Check whether bot is running. Always runs as if -v flag is set" 
+    echo -e " LOGDUMP     Prints combined lifetime log output from command script and manager script"
+
+    echo -e ""
+    echo -e "Options:"
+    echo -e " -v          Enable verbose mode when the lifespan manager reads in the command. Visible in container log"
+
+    echo -e -n "${RESET}"
+
+    echo -e "${WHITE}--------------------${RESET}"
+
+    exit 1
+}
+
+
+
+write_command_file() {
+    local command="$1"
+    local verbose="$2"
+    local targetFile="$FLAG_FILE_NAME"
+    local logFileCopy="${Log_File}_copy.txt"
+
+    if [ "$command" == "STATUS" ]; then
+        verbose=0
+    fi
+
+    if [ -f "$targetFile" ]; then
+        echo -e "${YELLOW}WARNING: Flag file already exists, this should not happen. Overwriting regardless${RESET}"
+    fi
+
+    touch "$targetFile"
+    local commandStr="$command $verbose"
+    echo "$commandStr" > "$targetFile"
+    echo -e "${LGREEN}Command '$commandStr' written to buffer${RESET}"
+
+    # output live logging
+    cp "$Log_File" "$logFileCopy"
+    sleep 3
+    diff "$Log_File" "$logFileCopy" | grep "^-[^-]" | sed 's/^-//'
+    rm "$logFileCopy"
+}
+
+
+
+dump_combined_log() {
+    cat $LOG_FILE_NAME
+}
+
+#############################
+
+main "$@"
+
+#############################
+

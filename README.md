@@ -17,3 +17,11 @@ This project is licensed under the terms of the [MIT License](https://opensource
 ## NOTES
 
 It's all scuffed as hell, sorry :)
+
+
+## TODO
+- Update API docker config
+  - Create nonroot user in container
+- Develop NGINX stuff for dev server
+  - Connect server to artificialinferno.com domain
+  - Upgrade with Gunicorn to proper production configuration

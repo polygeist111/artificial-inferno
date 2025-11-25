@@ -25,4 +25,7 @@ console_out("Initializing File Buffers", LogLevel.INFO)
 initializeFileBuffers() # on app load, remove any excess files in buffer
 console_out("Running App", LogLevel.INFO)
 
-app.run(debug=True)
+if __name__ == '__main__':
+    # if called by running python file, executes this
+    # if called by flask run [options], bypasses this
+    app.run(host='0.0.0.0', port = 5000, debug = True)

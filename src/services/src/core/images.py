@@ -5,7 +5,6 @@ Module to handle image-specific actions
 ### Imports
 # Standard
 import time
-import os
 
 # Third Party
 from werkzeug.datastructures import FileStorage
