@@ -141,7 +141,7 @@ class PoisonImagesApi(Resource):
         image_path = core.images.getImageFromBuffer()
         
         if image_path == "File not found":
-            poison_ns.abort(404, "Image not found: server image buffer is currently empty.")
+            poison_ns.abort(404, "Image not found: server image buffer is currently empty, and default case is yet to be implemented.")
         elif image_path == "Bad path":
             poison_ns.abort(500, f"Error serving image: bad internal filepath")
             

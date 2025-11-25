@@ -25,3 +25,6 @@ It's all scuffed as hell, sorry :)
 - Develop NGINX stuff for dev server
   - Connect server to artificialinferno.com domain
   - Upgrade with Gunicorn to proper production configuration
+- Add route for API passthrough to link to a "how to use the API" doc README on project github
+  - write said README
+- add favicon on apex and API domains
