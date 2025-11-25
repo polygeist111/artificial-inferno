@@ -1,0 +1,19 @@
+The following files here are dependencies not part of the Nepenthes
+distribution, included in the release tarball as a way to simplify
+installation. They have their own authors and licenses; deploying
+Nepenthes requires you to accept them as well:
+
+lustache MIT
+dkjson MIT/X11
+basexx MIT
+binaryheap MIT/X11
+fifo MIT/X11
+lpeg_patterns MIT/X11
+http MIT
+api7-lua-tinyyaml MIT
+
+The following were pulled from Luarocks as well, but written by myself,
+and are under the same license terms as Nepenthes (MIT):
+
+perihelion
+daemonparts

@@ -1,0 +1,29 @@
+rock_manifest = {
+   ["daemonparts-3.2-1.rockspec"] = "ce4b6a2e6e384f0b4c06c15c47404a4d",
+   doc = {
+      LICENSE = "95caee78c6ba5024b6f575bfb3eabb84"
+   },
+   lua = {
+      daemonparts = {
+         ["config_loader.lua"] = "d362cefa7405c3ec6baf859063d0f021",
+         corewait = {
+            ["init.lua"] = "df410beb2eac4259d75e24fa73331db2",
+            ["instance.lua"] = "d32a77a5d73887a02f7e065ab4dc526e",
+            ["signal.lua"] = "51281563796b689115c969c74f6c420b"
+         },
+         ["daemonize.lua"] = "23f9fe8ae9a2e47898a16b7b6336ce5b",
+         output = {
+            ["descriptor.lua"] = "4fea09dd58246025a20f588de277f405",
+            ["file.lua"] = "fbece9736e56041ad6ede5001674eefb",
+            ["init.lua"] = "e16ad1fcedf5587c1c0201d9b0309dce",
+            ["syslog.lua"] = "86e8fe5872c678ae2866d016c66753e8",
+            ["table.lua"] = "beb034aaeaff1cb620c49cbfae044133"
+         },
+         process = {
+            ["init.lua"] = "0c8f20fa6aa9bacfdb541c4d1c107f00",
+            ["monitor.lua"] = "5161fc3d26dc702aad46b7a1e1efa284",
+            ["pool.lua"] = "f626592fa09aeadf9aba2dca264e2fbd"
+         }
+      }
+   }
+}

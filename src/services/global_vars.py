@@ -1,0 +1,66 @@
+"""
+Globals and hardcoded sample values for program execution
+"""
+
+### Imports
+# Standard
+from enum import Enum
+
+# Third Party
+from markovify import Text as markovText
+
+# Local
+
+
+
+### Configurable Constants
+CORPUS_MAX_COUNT: int = 10001 # 1 is reserved for seed corpus, others are user-generated
+IMAGE_MAX_COUNT: int = 5 # TODO: should be 50 for production use
+AUDIO_MAX_COUNT: int = 30 # TODO: should be 50 for production use
+INTAKE_MAX_COUNT: int = 10
+DELIVERY_MAX_COUNT: int = 10
+FILE_DELETION_DELAY: int = 30 # seconds after serving to delete a file
+# Filepaths
+IMAGE_DIRECTORY: str = "data/buffer/images/"
+AUDIO_DIRECTORY: str = "data/buffer/audio/"
+CORPORA_DIRECTORY: str = "data/buffer/corpora/"
+DELIVERY_DIRECTORY: str = "data/out-for-delivery/"
+INTAKE_DIRECTORY: str = "data/intake/"
+
+### Runtime Vars
+#markov_chain: Optional[markovText] = None
+markov_chain: markovText
+corpus_count: int = 0
+image_count: int = 0
+audio_count: int = 0
+intake_count: int = 0
+delivery_count: int = 0
+
+# Colors
+class Colors(Enum):
+    """
+    Enum definition of most common ANSI color escapes
+    """
+    # Standard
+    STANDARD_BLACK = "\033[30m"
+    STANDARD_RED = "\033[31m"
+    STANDARD_GREEN = "\033[32m"
+    STANDARD_YELLOW = "\033[33m"
+    STANDARD_BLUE = "\033[34m"
+    STANDARD_PURPLE = "\033[35m"
+    STANDARD_CYAN = "\033[36m"
+    STANDARD_WHITE = "\033[37m"
+
+    # Background
+    BACKGROUND_BLACK = "\033[40m"
+    BACKGROUND_RED = "\033[41m"
+    BACKGROUND_GREEN = "\033[42m"
+    BACKGROUND_YELLOW = "\033[43m"
+    BACKGROUND_BLUE = "\033[44m"
+    BACKGROUND_PURPLE = "\033[45m"
+    BACKGROUND_CYAN = "\033[46m"
+    BACKGROUND_WHITE = "\033[47m"
+
+    # Special
+    RESET = "\033[0m"
+    ESC_IN_LINE = "\033[K"

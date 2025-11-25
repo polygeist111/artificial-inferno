@@ -1,0 +1,13 @@
+---
+name: nepenthes
+
+services:
+  tarpit:
+    build: .
+    ports:
+      - 8893:8893
+    volumes:
+      - data:/vol/nepenthes
+
+volumes:
+  data:
