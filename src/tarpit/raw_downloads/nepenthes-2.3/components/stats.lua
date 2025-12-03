@@ -11,7 +11,18 @@ local start = os.time()
 local tick = os.time()
 local tick_count = 0
 
+local totals = {
+	bytes_sent = 0,
+	bytes_generated = 0,
+	hits = 0,
+	delay = 0
+}
+
 function _M.clear()
+	for k in pairs(totals) do
+		totals[k] = 0
+	end
+
 	buf = fifo()
 end
 
@@ -49,7 +60,12 @@ function _M.log( val )
 
 	if #buf > 0 then
 		while buf:peek().when <= expired do
-			buf:pop()
+			local hit = buf:pop()
+
+			totals.hits = totals.hits + 1
+			totals.bytes_generated = totals.bytes_generated + hit.bytes_generated
+			totals.bytes_sent = totals.bytes_sent + hit.bytes_sent
+			totals.delay = totals.delay + hit.delay
 		end
 	end
 
@@ -88,6 +104,10 @@ function _M.compute( silo )
 		delay = 0,
 		active = 0,
 		bogons = 0,
+		delay_total = 0,
+		bytes_sent_total = 0,
+		bytes_generated_total = 0,
+		hits_total = 0,
 		uptime = os.time() - start
 	}
 
@@ -136,6 +156,11 @@ function _M.compute( silo )
 	end
 
 	ret.unsent_bytes = ret.bytes_generated - ret.bytes_sent
+
+	ret.hits_total = ret.hits + totals.hits
+	ret.delay_total = ret.delay + totals.delay
+	ret.bytes_generated_total = ret.bytes_generated + totals.bytes_generated
+	ret.bytes_sent_total = ret.bytes_sent + totals.bytes_sent
 
 	if ret.bytes_generated > 0 then
 		ret.unsent_bytes_percent = (( ret.bytes_generated - ret.bytes_sent ) / ret.bytes_generated ) * 100

@@ -5,6 +5,7 @@ if [ -z "$LUA_APP_LOCATION" ]; then
 fi
 
 export LUA_APP_LOCATION
+export LUA_APP_BOOTSTRAP=$LUA_APP_LOCATION/core/bootstrap.lua
 
 if [ -z "$1" ]; then
 	echo "Specify config file"

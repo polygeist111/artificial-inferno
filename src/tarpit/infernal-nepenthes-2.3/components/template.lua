@@ -31,15 +31,17 @@ local function template_schema()
 			}
 		},
 
-		link_array = cl.default_nil ({
-			name = 'links',
-			min_count = 5,
-			max_count = 8,
-			depth_min = 1,
-			depth_max = 5,
-			--description_min = 1,
-			--description_max = 5
-		}),
+		markov_array = cl.default_nil (
+			cl.array {
+				{
+					name = cl.default_nil('string'),
+					min_count = 2,
+					max_count = 5,
+					markov_min = 25,
+					markov_max = 200
+				}
+			}
+		),
 
 		links = cl.array {
 			{
@@ -49,7 +51,17 @@ local function template_schema()
 				--description_min = 1,
 				--description_max = 5
 			}
-		}
+		},
+
+		link_array = cl.default_nil ({
+			name = 'links',
+			min_count = 5,
+			max_count = 8,
+			depth_min = 1,
+			depth_max = 5,
+			--description_min = 1,
+			--description_max = 5
+		})
 	}
 end
 

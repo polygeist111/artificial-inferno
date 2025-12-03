@@ -1,0 +1,39 @@
+---
+markov:
+ - name: title
+   min: 5
+   max: 10
+ - name: header
+   min: 5
+   max: 10
+markov_array:
+ - name: paragraphs
+   min_count: 2
+   max_count: 5
+   markov_min: 25
+   markov_max: 200
+link_array:
+   min_count: 5
+   max_count: 8
+   depth_min: 1
+   depth_max: 5
+...
+<!DOCTYPE html>
+<html>
+<head>
+	{{#title}}<title>{{title}}</title>{{/title}}
+</head>
+<body>
+<h3>{{ header }}</h3>
+{{# paragraphs }}
+<p>
+	{{ . }}
+</p>
+{{/ paragraphs }}
+<ul>
+{{# links }}
+	<li><a href="{{{ link }}}">{{ description }}</a></li>
+{{/ links }}
+</ul>
+</body>
+</html>

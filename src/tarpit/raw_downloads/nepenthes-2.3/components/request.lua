@@ -2,7 +2,6 @@
 
 local config = require 'components.config'
 
-
 local _methods = {}
 
 function _methods.is_bogon( this )
@@ -16,7 +15,7 @@ function _methods.urllist( this )
 	assert( (not this._is_bogon), 'Unable to load URLs: bogon request' )
 
 	local ret = {}
-	local count = #(this.template.data.links)
+	local count = #(this.template.data.links or {})
 
 	if this.template.data.link_array then
 		count = count + this.rng:between(
@@ -40,9 +39,29 @@ function _methods.load_markov( this )
 
 	assert( (not this._is_bogon), 'Unable to load markov: bogon request' )
 
+	local function paragraph( m_min, m_max )
+		return this.markov:babble( this.rng,
+			m_min,
+			m_max
+		)
+	end
+
+
 	-- Markov time
 	for i, v in ipairs( this.template.data.markov ) do	-- luacheck: ignore 213
-		this.vars[v.name] = this.markov:babble( this.rng, v.min, v.max )
+		this.vars[v.name] = paragraph( v.min, v.max )
+	end
+
+	for i, v in ipairs( this.template.data.markov_array or {} ) do	-- luacheck: ignore 213
+
+		local count = this.rng:between( v.max_count, v.min_count )
+		local ret = {}
+
+		for pi = 1, count do	-- luacheck: ignore 213
+			ret[ #ret + 1 ] = paragraph( v.markov_min, v.markov_max )
+		end
+
+		this.vars[v.name] = ret
 	end
 
 end
