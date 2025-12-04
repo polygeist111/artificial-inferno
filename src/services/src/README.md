@@ -1,6 +1,7 @@
-These APIs are not thread safe. THe assumption is that only one instance of Artificial Inferno will be running at a given time.
+## Notes
+- **For production use, all the below curl examples are valid, just replace `127.0.0.1:5000` with `api.artificialinferno.com`**
+- These APIs are not thread safe. The assumption is that only one instance of Artificial Inferno will be running at a given time.
 That being said, the only significant thread-safety risk is on the trained corpus, which will continue to work fine if different threads train it differently.
-
 
 ## Structure
 Clean data is fed to the poisoner and processed. For one-off media (music, images) it is immediately buffered. For text the input is also saved, as well as added to the markov chain. When a request is made, if it's for text a new string is generated from the markov chain. If it's for the others, a resource is removed from the buffer and passed on. TO avoid repetition and obvious poisoning flagging on crawler intake, images and audio are only used once then removed from the poison pool.
@@ -41,7 +42,7 @@ The service does not perform any operations on images, it only buffers them for 
 **READ**<br/>
 Note the verbose flag. Since we've specified an output, if this errors (e.g. the server has no images buffered) that text will still be written to the file. By flagging it verbose, we can now see the actual response code to know if it succeeded.
 ```
-curl -v --output dev-help/samples-output/requested-img.jpg -X GET \
+curl -v --fail --output dev-help/samples-output/requested-img.jpg -X GET \
   127.0.0.1:5000/poison/images
 ```
 **WRITE**<br/>
@@ -54,11 +55,11 @@ curl -X POST \
 ### Sound
 **READ**<br/>
 ```
-curl -v --output dev-help/samples-output/requested-audio.mp3 -X GET \
+curl -v --fail --output dev-help/samples-output/requested-audio.mp3 -X GET \
   127.0.0.1:5000/poison/audio
 ```
 ```
-curl -v --output dev-help/samples-output/requested-audio.mp3 -X GET \
+curl -v --fail --output dev-help/samples-output/requested-audio.mp3 -X GET \
   -H "Content-Type: application/json" \
   -d '{"clip_duration": 5}' \
   127.0.0.1:5000/poison/audio

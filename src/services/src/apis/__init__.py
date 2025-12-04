@@ -10,6 +10,7 @@ from flask_restx import Api
 
 # Local
 from .poisoner_api import poison_ns
+from .monitor_api import monitor_ns
 
 
 
@@ -22,3 +23,4 @@ api = Api(
 )
 
 api.add_namespace(poison_ns, path="/poison")
+api.add_namespace(monitor_ns, path="/monitor")

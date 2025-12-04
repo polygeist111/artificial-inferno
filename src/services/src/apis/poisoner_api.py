@@ -13,6 +13,7 @@ from flask_restx import Namespace, Resource
 from werkzeug.datastructures import FileStorage
 
 # Local
+from core.messaging import console_out, LogLevel
 import core.markov
 import core.images
 import core.audio
@@ -139,7 +140,7 @@ class PoisonImagesApi(Resource):
             127.0.0.1:5000/poison/images
         """
         image_path = core.images.getImageFromBuffer()
-        
+        console_out(f"Image Path: {image_path}", LogLevel.USAGE)
         if image_path == "File not found":
             poison_ns.abort(404, "Image not found: server image buffer is currently empty, and default case is yet to be implemented.")
         elif image_path == "Bad path":

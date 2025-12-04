@@ -10,9 +10,35 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 95.0, 1223.0, 837.0 ],
+		"rect" : [ 243.0, 102.0, 1223.0, 837.0 ],
 		"gridsize" : [ 15.0, 15.0 ],
+		"toolbars_unpinned_last_save" : 15,
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-46",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 924.999991178512573, 1581.578932285308838, 60.0, 22.0 ],
+					"text" : "fullscreen"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-41",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "" ],
+					"patching_rect" : [ 911.842096567153931, 1623.684195041656494, 67.0, 22.0 ],
+					"save" : [ "#N", "thispatcher", ";", "#Q", "end", ";" ],
+					"text" : "thispatcher"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"bubble" : 1,
 					"fontname" : "Arial",
@@ -94,7 +120,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 428.193549275398254, 30.0, 150.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 673.0, 210.919024586677551, 150.0, 20.0 ],
+					"presentation_rect" : [ 672.368414640426636, 80.26315712928772, 150.0, 20.0 ],
 					"text" : "Set brush size",
 					"textjustification" : 1
 				}
@@ -108,7 +134,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 276.193549275398254, 31.0, 150.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 343.373506665229797, 212.359567523002625, 354.216880559921265, 20.0 ],
+					"presentation_rect" : [ 343.421049356460571, 81.578946590423584, 354.216880559921265, 20.0 ],
 					"text" : "Set brush color",
 					"textjustification" : 1
 				}
@@ -160,7 +186,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 180.443551957607269, 304.166681170463562, 18.518517911434174, 115.24610036611557 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 727.5, 237.5, 41.0, 160.0 ]
+					"presentation_rect" : [ 727.631572008132935, 106.578946352005005, 41.0, 160.0 ]
 				}
 
 			}
@@ -196,7 +222,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 732.193549275398254, 30.0, 150.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 1002.409675598144531, 210.919024586677551, 157.831331133842468, 20.0 ],
+					"presentation_rect" : [ 1002.631569385528564, 80.26315712928772, 157.831331133842468, 20.0 ],
 					"text" : "Finalize & Upload",
 					"textjustification" : 1
 				}
@@ -210,7 +236,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 580.193549275398254, 30.0, 150.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 797.590390920639038, 210.919024586677551, 157.831331133842468, 20.0 ],
+					"presentation_rect" : [ 797.36841344833374, 80.26315712928772, 157.831331133842468, 20.0 ],
 					"text" : "Clear brushstrokes",
 					"textjustification" : 1
 				}
@@ -224,7 +250,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 124.193549275398254, 31.0, 150.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 154.216873168945312, 212.359567523002625, 157.831331133842468, 20.0 ],
+					"presentation_rect" : [ 153.947366952896118, 81.578946590423584, 157.831331133842468, 20.0 ],
 					"text" : "Get new base image",
 					"textjustification" : 1
 				}
@@ -316,9 +342,8 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 42.0, 95.0, 768.0, 837.0 ],
+						"rect" : [ 42.0, 95.0, 1493.0, 837.0 ],
 						"gridsize" : [ 15.0, 15.0 ],
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-221",
@@ -537,13 +562,14 @@
 								"box" : 								{
 									"convertobj" : 1,
 									"id" : "obj-176",
+									"linecount" : 2,
 									"maxclass" : "message",
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"parseobj" : 1,
-									"patching_rect" : [ 938.888933658599854, 1744.444527626037598, 573.188410580158234, 22.0 ],
-									"text" : "\"Documents/Personal Programming/artificial-inferno/src/art-station/out-for-delivery/0.jpg\""
+									"patching_rect" : [ 938.888933658599854, 1744.444527626037598, 573.188410580158234, 35.0 ],
+									"text" : "\"Documents/Personal Programming/artificial-inferno/src/art-station/out-for-delivery/1764741393610248000.jpg\""
 								}
 
 							}
@@ -732,13 +758,13 @@
 , 							{
 								"box" : 								{
 									"id" : "obj-134",
-									"linecount" : 2,
+									"linecount" : 3,
 									"maxclass" : "message",
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 750.000035762786865, 1365.277842879295349, 473.043462753295898, 35.0 ],
-									"text" : "\"Macintosh HD:/Users/thalia/Documents/Personal Programming/artificial-inferno/src/art-station/out-for-delivery/0.jpg\""
+									"patching_rect" : [ 750.000035762786865, 1365.277842879295349, 473.043462753295898, 49.0 ],
+									"text" : "\"Macintosh HD:/Users/thalia/Documents/Personal Programming/artificial-inferno/src/art-station/out-for-delivery/1764741393610248000.jpg\""
 								}
 
 							}
@@ -802,14 +828,14 @@
 									"fontname" : "Arial",
 									"fontsize" : 13.0,
 									"id" : "obj-111",
-									"linecount" : 2,
+									"linecount" : 3,
 									"maxclass" : "message",
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"parseobj" : 1,
-									"patching_rect" : [ 635.0, 844.0, 449.473700284957886, 38.0 ],
-									"text" : "\"Macintosh HD:/Users/thalia/Documents/Personal Programming/artificial-inferno/src/art-station/out-for-delivery/0.jpg\""
+									"patching_rect" : [ 635.0, 844.0, 449.473700284957886, 52.0 ],
+									"text" : "\"Macintosh HD:/Users/thalia/Documents/Personal Programming/artificial-inferno/src/art-station/out-for-delivery/1764741393610248000.jpg\""
 								}
 
 							}
@@ -849,7 +875,7 @@
 									"data" : 									{
 										"part1" : 										{
 											"name" : "image",
-											"file" : "Macintosh HD:/Users/thalia/Documents/Personal Programming/artificial-inferno/src/art-station/out-for-delivery/0.jpg"
+											"file" : "Macintosh HD:/Users/thalia/Documents/Personal Programming/artificial-inferno/src/art-station/out-for-delivery/1764741393610248000.jpg"
 										}
 
 									}
@@ -1654,7 +1680,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 459.610231935977936, 677.777810096740723, 24.0, 24.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 1002.409675598144531, 238.629868984222412, 157.550542593002319, 157.550542593002319 ]
+					"presentation_rect" : [ 1002.631569385528564, 107.894735813140869, 157.550542593002319, 157.550542593002319 ]
 				}
 
 			}
@@ -1715,7 +1741,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 893.273572683334351, 419.801213145256042, 50.0, 35.0 ],
-					"text" : "688 209"
+					"text" : "1006 436"
 				}
 
 			}
@@ -2255,7 +2281,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 303.360224485397339, 497.222245931625366, 225.438594341278076, 22.0 ],
-					"text" : "0. 1. 1. 1."
+					"text" : "0.213859 0. 0.886857 1."
 				}
 
 			}
@@ -2281,7 +2307,7 @@
 					"outlettype" : [ "jit_matrix", "" ],
 					"patching_rect" : [ 729.054689228534698, 742.361146509647369, 1280.0, 720.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 154.0, 435.06493091583252, 1280.0, 720.0 ],
+					"presentation_rect" : [ 153.947366952896118, 303.947365522384644, 1280.0, 720.0 ],
 					"sync" : 1
 				}
 
@@ -2394,7 +2420,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 303.360224485397339, 402.777796983718872, 120.0, 47.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 343.820252180099487, 240.449457406997681, 353.932612538337708, 157.303383350372314 ],
+					"presentation_rect" : [ 343.421049356460571, 109.210525274276733, 353.932612538337708, 157.303383350372314 ],
 					"saturation" : 1.0
 				}
 
@@ -2409,7 +2435,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 303.360224485397339, 304.166681170463562, 24.0, 24.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 797.590390920639038, 238.629868984222412, 157.740262031555176, 157.740262031555176 ]
+					"presentation_rect" : [ 797.36841344833374, 107.894735813140869, 157.740262031555176, 157.740262031555176 ]
 				}
 
 			}
@@ -2833,7 +2859,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 59.0, 105.0, 1086.0, 754.0 ],
+						"rect" : [ 34.0, 62.0, 1612.0, 954.0 ],
 						"gridsize" : [ 15.0, 15.0 ],
 						"boxes" : [ 							{
 								"box" : 								{
@@ -3477,7 +3503,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 659.756113290786743, 1009.756121635437012, 1135.869543552398682, 22.0 ],
-									"text" : "https://pixabay.com/get/gb06aba3970399f03b0c0af04cf64ea85e345e3fbebeef4dbe78936ec4e5f23cd5d3d2087403064ff714216a0b6a0a29159eccad5f09a2624ad398559ed3fcce5_1280.png"
+									"text" : "https://pixabay.com/get/g1ba0077589877b8726fb6471274902a789b6f572885176faa108f26e9197a17e53dfd3631346c2ead72ae31ef4fbe6178a0d29e2fa7b0dbfc73f3ce6d55968b2_1280.jpg"
 								}
 
 							}
@@ -4506,7 +4532,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 124.193549275398254, 79.861114919185638, 24.0, 24.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 154.0, 240.0, 158.0, 158.0 ]
+					"presentation_rect" : [ 153.947366952896118, 109.210525274276733, 158.0, 158.0 ]
 				}
 
 			}
@@ -4852,6 +4878,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-25", 0 ],
 					"source" : [ "obj-43", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-41", 0 ],
+					"source" : [ "obj-46", 0 ]
 				}
 
 			}

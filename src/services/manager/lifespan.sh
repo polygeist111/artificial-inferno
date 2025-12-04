@@ -55,7 +55,8 @@ main() {
     echo -e "${WHITE}launch flag is $AUTO_LAUNCH_BOT${RESET}"
     if [ "$AUTO_LAUNCH_BOT" == 0 ]; then
         echo -e "${GREEN}Automatically launching bot defined by python script '$Bot_File'${RESET}"
-        python3.14 "$Bot_File" & #& symbol runs script in background
+        #python3.14 "$Bot_File" & #& symbol runs script in background
+        flask run --host=0.0.0.0 --debug
         Bot_PID="$!"
         echo "bot started"
     fi 
@@ -209,7 +210,9 @@ stop_bot() {
 
     check_bot_status "$verbose"
     if [ "$Bot_Status" == 0 ]; then
-        pkill -f "$Bot_File"
+        # -2 is SIGINT, for Flask
+        #pkill -9 -f "$Bot_File"
+        pkill -9 -f "flask"
         if [ "$verbose" == 0 ]; then
             echo -e "${LGREEN}SUCCESS: Bot stopped${RESET}"
         fi
@@ -230,7 +233,8 @@ start_bot() {
 
     check_bot_status "$verbose"
     if [ "$Bot_Status" == 1 ]; then
-        python3.14 "$Bot_File" &
+        #python3.14 "$Bot_File" &
+        flask run --host=0.0.0.0 --debug
         Bot_PID="$!"
         if [ "$verbose" == 0 ]; then
             echo -e "${LGREEN}SUCCESS: Bot started${RESET}"
